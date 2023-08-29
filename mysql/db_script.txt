@@ -1,3 +1,5 @@
+mysql
+
 create database COP4331;
 
 use COP4331;
@@ -17,3 +19,5 @@ insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('Kenneth','
 
 create user 'API_User' identified by 'API_Password';
 grant all privileges on COP4331.* to 'API_User'@'%';
+
+exit
