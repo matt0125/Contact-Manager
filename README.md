@@ -1,6 +1,8 @@
 # Contact-Manager
 POOSD small project - group 18
 
-Front-end code can be found in the html folder, this folder lives on the server at var/www/html
-
-Further code will be added as it is developed.
+### To get project running
+1. Install a Digital Ocean LAMP droplet
+2. Log in
+3. Run the [MySQL install script](mysql/db_script.txt)
+4. Copy contents of [html directory](/html) into /var/www/html
