@@ -1,0 +1,19 @@
+create database COP4331;
+
+use COP4331;
+
+CREATE TABLE `COP4331`.`Users` ( `ID` INT NOT NULL AUTO_INCREMENT , `DateCreated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `DateLastLoggedIn` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , `FirstName` VARCHAR(50) NOT NULL DEFAULT '' , `LastName` VARCHAR(50) NOT NULL DEFAULT '' , `Login` VARCHAR(50) NOT NULL DEFAULT '' , `Password` VARCHAR(50) NOT NULL DEFAULT '' , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+CREATE TABLE `COP4331`.`Contacts` ( `ID` INT NOT NULL AUTO_INCREMENT , `FirstName` VARCHAR(50) NOT NULL DEFAULT '' , `LastName` VARCHAR(50) NOT NULL DEFAULT '' , `Phone` VARCHAR(50) NOT NULL DEFAULT '' , `Email` VARCHAR(50) NOT NULL DEFAULT '' , `UserID` INT NOT NULL DEFAULT '0' , PRIMARY KEY (`ID`)) ENGINE = InnoDB;
+
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Matthew','Daley','MDaley','Password');
+insert into Users (FirstName,LastName,Login,Password) VALUES ('Sam','Hill','SHill','Password');
+
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('Matthew','Daley','3863720482','email@gmail.com','1');
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('Evan','Evans','1992938726','flowers@gmail.com','1');
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('James','Johnson','8947300482','ground@gmail.com','1');
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('Jackson','Jackson','6683430989','gmail@gmail.com','2');
+insert into Contacts (FirstName,LastName,Phone,Email,UserID) VALUES ('Kenneth','Garreths','5545656670','sailor@gmail.com','2');
+
+create user 'API_User' identified by 'API_Password';
+grant all privileges on COP4331.* to 'API_User'@'%';
