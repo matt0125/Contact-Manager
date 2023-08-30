@@ -12,26 +12,24 @@
 	}
 	else
 	{
-        $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE FirstName=? AND LastName=? AND Phone=? AND Email=? AND UserID=?");
-        $stmt->bind_param("sssss", $inData["firstname"], $inData["lastname"], $inData["phone"], $inData["email"], $indata["userid"]);
+        $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE ID=?");
+        $stmt->bind_param("s", $inData["id"]);
         $stmt->execute();
 		$result = $stmt->get_result();
 
         if( $row = $result->fetch_assoc()  )
 		{
-            $delete = $conn->prepare("delete from Users Where ID =?" );
-            $delete->bind_param("s", $row['ID'] );
-            $delete->execute();
-            $result = $delte->get_result();
-            
-            if($row = $result->fetch_assoc())
-            {
-                returnWithInfo("Contact deleted");
-            }
-            else
-            {
-                returnWithError("Error deleting contact");
-            }
+            $delete = $conn->prepare("delete from Contacts Where ID =?" );
+            $delete->bind_param( "s", $inData["id"] );
+
+            if ($delete->execute()) 
+			{
+				returnWithInfo( "Contact deleted" );
+			} else 
+			{
+				returnWithError( "Error deleting row: " . $delete->error );
+			}
+
             $delete->close();
 		}
 		else
@@ -56,7 +54,7 @@
 	
 	function returnWithError( $err )
 	{
-		$retValue = '{"id":0,"firstName":"","lastName":"","error":"' . $err . '"}';
+		$retValue = '{"status":"","error":"' . $err . '"}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
