@@ -23,7 +23,20 @@
 		{
 			if( strcmp($row['password'], $inData["password"]) === 0 )
 			{
-				returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+				$stmt2 = $conn->prepare("UPDATE Users SET DateLastLoggedIn = ? WHERE Login=?");
+				$currentTime = date('Y-m-d H:i:s', time());
+				$stmt2->bind_param("ss", $currentTime, $inData["login"]);
+				
+				if( $stmt2->execute() )
+				{
+					returnWithInfo( $row['firstName'], $row['lastName'], $row['ID'] );
+				}
+				else
+				{
+					returnWithError("Error updating record: " . $stmt2->error );
+				}
+
+				$stmt2->close();
 			}
 			else
 			{
