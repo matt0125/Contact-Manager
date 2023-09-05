@@ -1,0 +1,47 @@
+.large-frame {
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+  }
+  .half-frame {
+    flex: 1;
+    padding: 2em;
+  }
+  .half-frame:first-child {
+    background-color: #B195D2;
+  }
+  .half-frame:nth-child(2) {
+    background-color: #B195D2;
+  }
+  .rounded-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%; 
+    transform: translate(-50%, -50%);
+    border-radius: 25px;
+    padding: 2em;
+    background-color: transparent;
+    overflow: hidden;
+    max-width: 400px;
+  
+    max-width: 1000px;
+    width: 100%;
+  
+    height: 600px;
+  
+    display: flex;
+  }
+  .rounded-frame-half {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .rounded-frame-half:first-child {
+    background-color: #E9CBFF;
+  }
+  .rounded-frame-half:last-child {
+    background-color: #FFFFFF;
+  }
+  
+  /* #FFE7FF */
