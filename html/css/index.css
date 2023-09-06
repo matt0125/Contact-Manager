@@ -43,5 +43,27 @@
   .rounded-frame-half:last-child {
     background-color: #FFFFFF;
   }
+
+  .handwritten {
+    font-family: 'Kalam', cursive;
+  }
+
+  .wide-btn {
+    width: 100%;
+    padding: .5rem 1rem;
+  }
+
+  .custom-color-btn {
+    background-color: #7a49a5;
+    border-color: #6D8FB7;
+  }
+
+  .custom-color-btn:hover,
+  .custom-color-btn:focus,
+  .custom-color-btn:active {
+    background-color: #335173;
+    border-color: transparent;
+  }
+
   
   /* #FFE7FF */
