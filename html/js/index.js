@@ -76,3 +76,63 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         console.error('Login failed:', result.error);
     }
 });
+
+async function signup(firstname, lastname, username, password) {
+    try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+            "firstname": firstname,
+            "lastname": lastname,
+            "login": username,
+            "password": password
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            
+        const response = await fetch('http://poosd-project.com/LAMPAPI/Register.php', requestOptions);
+
+        const data = await response.json();
+        if (data.id !== 0) {
+            return {
+                success: true,
+                userId: data.id,
+                firstName: data.firstName,
+                lastName: data.lastName
+            };
+        } else {
+            return {
+                success: false,
+                error: data.error
+            };
+        }
+    } catch (error) {
+        console.error("There was an issue with the fetch operation:", error.message);
+        return {
+            success: false,
+            error: 'Network or server error'
+        };
+    }
+}
+
+document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const firstname = document.getElementById('signUpFirstname').value;
+    const lastname = document.getElementById('signUpLastname').value;
+    const username = document.getElementById('signUpUsername').value;
+    const password = document.getElementById('signUpPassword').value;
+
+    const result = await signup(firstname, lastname, username, password);
+    if (result.success) {
+        console.log('Successfully signed up with token:', result.token);
+    } else {
+        console.error('Sign up failed:', result.error);
+    }
+});
