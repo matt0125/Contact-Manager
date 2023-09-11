@@ -1,0 +1,127 @@
+/* for contacts page*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #FFE7FF;
+}
+
+h1 {
+    font-family: sans-serif;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 48px;
+}
+
+header {
+    color: #967BB6;
+    font-family: "Helvetica", sans-serif;
+    /* increase font size */
+    text-align: left;
+    padding: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.search-bar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 7px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+    margin-top: 100px;
+    height: 40px;
+}
+
+#search-input {
+    border: none;
+    border-radius: 25px;
+    padding: 7px;
+    width: 90%;
+    outline: none;
+}
+
+.search-icon {
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#logout-container {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+}
+
+#logout-button {
+    background-color: #fff;
+    font-family: "Helvetica", sans-serif;
+    color: #231237;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+}
+
+.cm-tbl-container {
+    font-size: 20px;
+    margin-top: 35px;
+    width: 80%;
+    margin: auto;
+}
+
+.cm-tbl-row{
+    display: flex;
+}
+
+.cm-tbl-col {
+    background-color: #FFE7FF;
+    margin: 2px;
+    padding: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cm-fname {
+    flex-basis: 20%;
+}
+
+.cm-lname {
+    flex-basis: 20%;
+}
+
+.cm-email {
+    flex-grow: 2;
+    flex-basis: 20%;
+}
+
+.cm-phone {
+    flex-basis: 20%;
+}
+
+.cm-header {
+    background-color: #967BB6;
+    font-weight: bolder;
+}
+
+.cm-edit, .cm-delete {
+    flex-basis: 5%;
+    text-align: center;
+    cursor: pointer;
+}
+
+
