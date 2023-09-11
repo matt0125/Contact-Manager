@@ -42,14 +42,16 @@
         <div id="signUpForm" class="mt-3 handwritten" style="display: none;">
           <h2> Create New Account</h2>
           <form>
-              <div class="mb-3">
-                <input type="firstname" class="form-control form-control-lg " id="signUpFirstname" placeholder="First Name">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control form-control-lg " id="signUpFirstname" placeholder="First Name">
+              </div>
+              <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control form-control-lg " id="signUpLastname" placeholder="Last Name">
+              </div>
               </div>
               <div class="mb-3">
-                <input type="firstname" class="form-control form-control-lg " id="signUpLastname" placeholder="Last Name">
-              </div>
-              <div class="mb-3">
-                  <input type="username" class="form-control form-control-lg " id="signUpUsername" placeholder="Username">
+                  <input type="text" class="form-control form-control-lg " id="signUpUsername" placeholder="Username">
               </div>
               <div class="mb-3">
                   <input type="password" class="form-control form-control-lg " id="signUpPassword" placeholder="Password">
@@ -58,6 +60,7 @@
                   <input type="password" class="form-control form-control-lg " id="confirmPassword" placeholder="Confirm Password">
               </div>
               <button type="submit" class="btn btn-primary mt-2 wide-btn custom-color-btn">Sign Up</button>
+              <div id="signUpError"></div>
           </form>
       </div>
     </div>

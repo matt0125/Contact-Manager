@@ -143,9 +143,21 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     const lastname = document.getElementById('signUpLastname').value;
     const username = document.getElementById('signUpUsername').value;
     const password = document.getElementById('signUpPassword').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+
+    const signUpError = document.getElementById("signUpError");
+
+    if (password !== confirmPassword) {
+        console.log("Passwords don't match");
+        signUpError.classList.add('error-message');
+        signUpError.textContent = "Passwords do not match. Please try again.";
+        return;
+    }
 
     const result = await signup(firstname, lastname, username, password);
     if (result.success) {
+        signUpError.classList.remove('error-message');
+        signUpError.textContent = "";
         console.log('Successfully signed up with token:', result.token);
     } else {
         console.error('Sign up failed:', result.error);
