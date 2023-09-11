@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Contacts Page</title>
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="css/contact.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1><strong>Contacts</strong></h1>
+    </header>
+    <!-- search bar stuff -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search...">
+        <div id="search-icon" class="search-icon">&#128269;</div>
+    </div>
+    <div id="logout-container">
+        <button id="logout-button">Logout</button>
+    </div>
+
+    <div class="cm-tbl-container">
+        <div class="cm-tbl-row">
+            <div class="cm-tbl-col cm-fname cm-header">First Name</div>
+            <div class="cm-tbl-col cm-lname cm-header">Last Name</div>
+            <div class="cm-tbl-col cm-email cm-header">Email</div>
+            <div class="cm-tbl-col cm-phone cm-header">Phone Number</div>
+            <div class="cm-tbl-col cm-header cm-add-contact-col" id="cmAddNewEntry">+</div>
+        </div>
+        <span id="tblBody"></span>
+    </div>
+
+    <div class="disable-modal" id="backdrop"></div>
+    <div class="disable-modal" id="newPersonModal">
+        <h1>Add new account</h1>
+
+        <label for="newPersFName">First Name</label>
+        <input type="text" id="newPersFName">
+
+        <label for="newPersLName">Last Name</label>
+        <input type="text" id="newPersLName">
+        
+        <label for="newPersEmail">Email</label>
+        <input type="text" id="newPersEmail">
+
+        <label for="newPersPhone">Phone</label>
+        <input type="text" id="newPersPhone">
+
+        <button id="newPersCancelBtn">Cancel</button>
+        <button id="newPersSubmitBtn">Submit</button>
+    </div>
+
+    <!-- Bootstrap js-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/contact.js"></script>
+</body>
+</html>
