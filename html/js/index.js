@@ -63,6 +63,8 @@ async function login(username, password) {
     }
 }
 
+const errorMsg = document.getElementById('errorMsg');
+
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -72,8 +74,21 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     const result = await login(username, password);
     if (result.success) {
         console.log('Successfully logged in with token:', result.token);
+        errorMsg.textContent = '';
+        errorMsg.classList.remove('error-message');
+
+        window.location.href = 'contact.html';
     } else {
         console.error('Login failed:', result.error);
+
+        errorMsg.classList.add('error-message');
+        if (result.error ===     "No Records Found") {
+            errorMsg.textContent = "User name does not exist";
+        } else if (result.error === "Incorrect password") {
+            errorMsg.textContent = "User name exists, incorrect password";
+        } else {
+            errorMsg.textContent = "Unknown error occurred. Please try again.";
+        }
     }
 });
 
