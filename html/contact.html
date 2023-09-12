@@ -2,10 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=devide-width, initial-scale1.0">
     <title>Contacts Page</title>
     <!-- BOOTSTRAP CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!--link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"-->
     <link href="css/contact.css" rel="stylesheet">
 </head>
 <body>
@@ -20,40 +21,51 @@
     <div id="logout-container">
         <button id="logout-button">Logout</button>
     </div>
-
-    <div class="cm-tbl-container">
-        <div class="cm-tbl-row">
-            <div class="cm-tbl-col cm-fname cm-header">First Name</div>
-            <div class="cm-tbl-col cm-lname cm-header">Last Name</div>
-            <div class="cm-tbl-col cm-email cm-header">Email</div>
-            <div class="cm-tbl-col cm-phone cm-header">Phone Number</div>
-            <div class="cm-tbl-col cm-header cm-add-contact-col" id="cmAddNewEntry">+</div>
-        </div>
-        <span id="tblBody"></span>
-    </div>
-
-    <div class="disable-modal" id="backdrop"></div>
-    <div class="disable-modal" id="newPersonModal">
-        <h1>Add new account</h1>
-
-        <label for="newPersFName">First Name</label>
-        <input type="text" id="newPersFName">
-
-        <label for="newPersLName">Last Name</label>
-        <input type="text" id="newPersLName">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <select class="form-control" id="sortBy">
+                            <option value="firstName">Sort by First Name</option>
+                            <option value="lastName">Sort by Last Name</option>
+                            <option value="phone">Sort by Phone</option>
+                            <option value="email">Sort by Email</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <select class="form-control" id="sortOrder">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button class="btn btn-primary" id="addContact">Add Contact</button>
+                    </div>
+                </div>
         
-        <label for="newPersEmail">Email</label>
-        <input type="text" id="newPersEmail">
-
-        <label for="newPersPhone">Phone</label>
-        <input type="text" id="newPersPhone">
-
-        <button id="newPersCancelBtn">Cancel</button>
-        <button id="newPersSubmitBtn">Submit</button>
+                <!-- Contact Table -->
+                <table class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contactList">
+                        <!-- Contacts will be dynamically added here -->
+                    </tbody>
+                </table>
+             </div>
+        </div>
     </div>
-
     <!-- Bootstrap js-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="js/contact.js"></script>
 </body>
 </html>
