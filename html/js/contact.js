@@ -1,6 +1,5 @@
 const searchInput = document.getElementById("search-input");
 const searchIcon = document.getElementById("search-icon");
-//const tableKey = 'cm-tbl';
 
 searchIcon.addEventListener("click", function (){
     const searchTerm = searchInput.value;
@@ -12,25 +11,33 @@ searchIcon.addEventListener("click", function (){
     }
 });
 
-fetch('http://poosd-project.com/LAMPAPI/Login.php')
-    .then(response => response.json())
-    .then(data => {
-        const tableBody = document.getElementById()
+function fetchAccInfo() {
+    const apiURL = 'poosd-project.com/LAMPAPI/Get/Contacts.php';
 
-        data.forEach(account => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${account.id}</td}
-                <td>${account.name}</td>
-                <td>${account.balance}</td>
+    fetch(apiURL)
+        .then((response) => response.json())
+        .then((data) => {
+            const tableBody = document.getElementById('contactList');
+
+            tableBody.innerHTML = '';
+
+            data.forEach((account) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${account.firsName}</td>
+                    <td>${account.lastName}</td>
+                    <td>${account.phone}</td>
+                    <td>${account.email}</td>
                 `;
-                tableBody.appendChild(row);
+                tableBodt.appendChild(row);
+            });
+        })
+        .catch((error) => {
+            console.error('Error fetching data:', error);
         });
-    })
-    .catch(error => {
-        console.error('Error: ', error);
-    });
+}
 
+fetchAccountData();
 
 
 
