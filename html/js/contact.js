@@ -13,7 +13,7 @@ searchIcon.addEventListener("click", function (){
 
 async function getContacts(){
     try{
-        const response = await fetch('API_ENDPOINT', requestOptions);
+        const response = await fetch('https://poosd-project.com/LAMPAPI/Get/Contacts.php', requestOptions);
         const data = await response.json();
         console.log('Successfully fetched contacts:', data);
         return data;
