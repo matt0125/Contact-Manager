@@ -29,7 +29,7 @@ function fetchAccInfo() {
                     <td>${account.phone}</td>
                     <td>${account.email}</td>
                 `;
-                tableBodt.appendChild(row);
+                tableBody.appendChild(row);
             });
         })
         .catch((error) => {
