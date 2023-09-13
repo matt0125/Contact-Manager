@@ -13,27 +13,20 @@ searchIcon.addEventListener("click", function (){
 
 async function getContacts(){
     try{
-        const response = await fetch('https://poosd-project.com/LAMPAPI/Get/Contacts.php', requestOptions);
-        const data = await response.json();
-        console.log('Successfully fetched contacts:', data);
-        return data;
+        const response = await fetch('https://poosd-project.com/LAMPAPI/Get/Contacts.php');
+        if (response.ok) {
+            const data = await response.json();
+            console.log('Successfully fetched contacts:', data);
+            return data;
+        }
+        else {
+            console.error('Failed to fetch contacts. Status:', response.status);
+            return null;
+        }
     } 
     catch (error) {
         console.error("Error fetching contacts:", error.message);
         return null;
-    }
-}
-
-const result = await login(username, password);
-if(result.success){
-    const contacts = await getContacts();
-    if(contacts){
-        for(const contact of contacts) {
-            addContactToTable(contact);
-        }
-    }
-    else {
-        console.error('Failed to fetch contacts.');
     }
 }
 
@@ -51,7 +44,25 @@ function addContactToTable(contact){
     console.log('Added contact to the table:', contact);
 }
 
-fetchAccountData();
+async function populateContacts() {
+    const result = await login(username, password);
+    if(result.success) {
+        const contacts = await getContacts();
+        if(contacts){
+            for(const contact of contacts){
+                addContactToTable(contact);
+            }
+        }
+        else{
+            console.error('Failed to fetch contacts.');
+        }
+    }
+    else{
+        console.error('Login failed:', result.error);
+    }
+}
+
+populateContacts();
 
 
 
