@@ -11,30 +11,44 @@ searchIcon.addEventListener("click", function (){
     }
 });
 
-function fetchAccInfo() {
-    const apiURL = 'poosd-project.com/LAMPAPI/Get/Contacts.php';
+async function getContacts(){
+    try{
+        const response = await fetch('API_ENDPOINT', requestOptions);
+        const data = await response.json();
+        console.log('Successfully fetched contacts:', data);
+        return data;
+    } 
+    catch (error) {
+        console.error("Error fetching contacts:", error.message);
+        return null;
+    }
+}
 
-    fetch(apiURL)
-        .then((response) => response.json())
-        .then((data) => {
-            const tableBody = document.getElementById('contactList');
+const result = await login(username, password);
+if(result.success){
+    const contacts = await getContacts();
+    if(contacts){
+        for(const contact of contacts) {
+            addContactToTable(contact);
+        }
+    }
+    else {
+        console.error('Failed to fetch contacts.');
+    }
+}
 
-            tableBody.innerHTML = '';
-
-            data.forEach((account) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${account.firsName}</td>
-                    <td>${account.lastName}</td>
-                    <td>${account.phone}</td>
-                    <td>${account.email}</td>
-                `;
-                tableBody.appendChild(row);
-            });
-        })
-        .catch((error) => {
-            console.error('Error fetching data:', error);
-        });
+function addContactToTable(contact){
+    const contactList = document.getElementById('contactList');
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+        <td>${contact.firstName}</td>
+        <td>${contact.lastName}</td>
+        <td>${contact.phone}</td>
+        <td>${contact.email}</td>
+        <td>Actions</td>
+    `;
+    contactList.appendChild(newRow);
+    console.log('Added contact to the table:', contact);
 }
 
 fetchAccountData();
