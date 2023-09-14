@@ -42,6 +42,12 @@ async function login(username, password) {
 
         const data = await response.json();
         if (data.id !== 0) {
+            let date = new Date();
+            date.setTime(date.getTime()+(20*60*1000));	
+            document.cookie = "userId=" + data.id + ";expires=" + date.toGMTString();
+            document.cookie = "firstName=" + data.firstName + ";expires=" + date.toGMTString();
+            document.cookie = "lastName=" + data.lastName + ";expires=" + date.toGMTString();
+            
             return {
                 success: true,
                 userId: data.id,
@@ -73,7 +79,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     const result = await login(username, password);
     if (result.success) {
-        console.log('Successfully logged in with token:', result.token);
+        console.log('Successfully logged in');
         errorMsg.textContent = '';
         errorMsg.classList.remove('error-message');
 
@@ -158,7 +164,7 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     if (result.success) {
         signUpError.classList.remove('error-message');
         signUpError.textContent = "";
-        console.log('Successfully signed up with token:', result.token);
+        console.log('Successfully signed up');
     } else {
         console.error('Sign up failed:', result.error);
     }
