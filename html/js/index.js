@@ -162,9 +162,9 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
 
     const result = await signup(firstname, lastname, username, password);
     if (result.success) {
-        signUpError.classList.remove('error-message');
-        signUpError.textContent = "";
+        errorMsg.textContent = "Succesfully signed up. Please log in.";
         console.log('Successfully signed up');
+        toggleForm('login');
     } else {
         console.error('Sign up failed:', result.error);
     }
