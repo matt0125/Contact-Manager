@@ -63,6 +63,7 @@ function addContactToTable(contact){
 }
 
 async function populateContacts() {
+    document.getElementById("contactList").innerHTML = '';
     let userId = readCookie("userId");
     if (userId) {
         try {
@@ -81,7 +82,61 @@ async function populateContacts() {
 
 populateContacts();
 
-// Add contact
+// Add contact form
+function toggleAddContact() {
+    var overlay = document.getElementById('overlay');
+    var modal = document.getElementById('contactModal');
+    
+    overlay.style.display = overlay.style.display === "none" ? "block" : "none";
+    modal.style.display = modal.style.display === "none" ? "block" : "none";
+}
+
+document.getElementById('addContactBtn').addEventListener('click', toggleAddContact);
+
+// Create contact button functionality
+document.getElementById('contactForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    var firstName = document.getElementById('firstNameInput').value;
+    var lastName = document.getElementById('lastNameInput').value;
+    var phone = document.getElementById('phoneInput').value;
+    var email = document.getElementById('emailInput').value;
+
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "userid": readCookie("userId"),
+        "firstname": firstName,
+        "lastname": lastName,
+        "phone": phone,
+        "email": email
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    try {
+        const response = await fetch("http://poosd-project.com/LAMPAPI/CreateContact.php", requestOptions);
+        const result = await response.json();
+
+        if (result.status === "Success") {
+            console.log("successfully added contact");
+            toggleAddContact();
+            populateContacts();
+        } else {
+            console.log("Failed to add contact", result.error || "");
+        }
+    } catch (error) {
+        console.log('Error occurred:', error);
+    }
+});
+
+
 
 // Returns value of associated cookie name. If Cookie name doesn't exist, returns null.
 function readCookie(cookieName) {
