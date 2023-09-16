@@ -11,22 +11,40 @@ searchIcon.addEventListener("click", function (){
     }
 });
 
-async function getContacts(){
-    try{
-        const response = await fetch('https://poosd-project.com/LAMPAPI/Get/Contacts.php');
+async function getContacts(userId) {
+    if (!userId) {
+        throw new Error("User ID is not provided.");
+    }
+    if (typeof userId !== "string" && typeof userId !== "number") {
+        throw new Error("Invalid User ID type. Expected string or number.");
+    }
+    console.log("User Id: " + userId + " is a type " + typeof userId);
+    try {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "userid": userId.toString()
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        }
+
+        const response = await fetch("http://poosd-project.com/LAMPAPI/Get/Contacts.php", requestOptions);
+
         if (response.ok) {
             const data = await response.json();
-            console.log('Successfully fetched contacts:', data);
             return data;
-        }
-        else {
-            console.error('Failed to fetch contacts. Status:', response.status);
-            return null;
+        } else {
+            throw new Error("Failed to fetch contacts.");
         }
     } 
     catch (error) {
-        console.error("Error fetching contacts:", error.message);
-        return null;
+        throw error;
     }
 }
 
@@ -34,7 +52,7 @@ function addContactToTable(contact){
     const contactList = document.getElementById('contactList');
     const newRow = document.createElement('tr');
     newRow.innerHTML = `
-        <td>${contact.firstName}</td>
+        <td>${contact.firstname}</td>
         <td>${contact.lastName}</td>
         <td>${contact.phone}</td>
         <td>${contact.email}</td>
@@ -45,24 +63,37 @@ function addContactToTable(contact){
 }
 
 async function populateContacts() {
-    const result = await login(username, password);
-    if(result.success) {
-        const contacts = await getContacts();
-        if(contacts){
-            for(const contact of contacts){
+    let userId = readCookie("userId");
+    if (userId) {
+        try {
+            const contacts = await getContacts(userId);
+            for (const contact of contacts.result) {
                 addContactToTable(contact);
             }
+        } catch (error) {
+            console.error("Error in populateContacts:", error.message);
         }
-        else{
-            console.error('Failed to fetch contacts.');
-        }
+    } else {
+        console.error("UserId not found in cookies.");
     }
-    else{
-        console.error('Login failed:', result.error);
-    }
+    
 }
 
 populateContacts();
 
+// Add contact
+
+// Returns value of associated cookie name. If Cookie name doesn't exist, returns null.
+function readCookie(cookieName) {
+    let cookieArray = document.cookie.split(';');
+
+    for (let cookieString of cookieArray) {
+        let [name, value] = cookieString.trim().split('=');
+        if (name === cookieName) {
+            return value;
+        }
+    }
+    return null;
+}
 
 
