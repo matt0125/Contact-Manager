@@ -37,7 +37,7 @@
         </div>
 
         <div class="col-md-1 text-right">
-            <button id="addContactBtn">Add Contact</button>
+            <button id="addContactBtn">Create Contact</button>
         </div>
 
         <div class="col-md-1 text-right">
@@ -84,25 +84,23 @@
                 </div>
             </div>
         </div>
-
     </div>
-
 
     <div class="row mt-1">
         <!-- Empty spacer row -->
     </div>
-    
+
     <div class="row justify-content-center">
         <div class="col-md-10">
             <!-- Contact Table -->
             <table class="table table-striped mt-4">
                 <thead>
                     <tr>
-                        <th id="table-firstname">First Name <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
-                        <th id="table-lastname">Last Name <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
-                        <th id="table-phone">Phone <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
-                        <th id="table-email">Email <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
-                        <th id="table-actions">Actions</i></th>
+                        <th id="table-firstname" class="sortable-header">First Name <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
+                        <th id="table-lastname" class="sortable-header">Last Name <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
+                        <th id="table-phone" class="sortable-header">Phone <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
+                        <th id="table-email" class="sortable-header">Email <i class="fa-solid fa-sort" style="margin-left: 6px;"></i></th>
+                        <th id="table-actions"></th>
                     </tr>
                 </thead>
                 <tbody id="contactList">
@@ -120,7 +118,7 @@
     <script src="js/contact.js"></script>
 
     <script>
-        document.getElementById('closeForm').addEventListener('click', toggleAddContact);
+
     </script>
 </body>
 </html>

@@ -15,14 +15,14 @@
 	else
 	{
         $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE ID=?");
-        $stmt->bind_param("s", $inData["id"]);
+        $stmt->bind_param("s", $inData["contactid"]);
         $stmt->execute();
 		$result = $stmt->get_result();
 
         if( $row = $result->fetch_assoc()  )
 		{
             $delete = $conn->prepare("delete from Contacts Where ID =?" );
-            $delete->bind_param( "s", $inData["id"] );
+            $delete->bind_param( "s", $inData["contactid"] );
 
             if ($delete->execute()) 
 			{
@@ -62,7 +62,7 @@
 	
 	function returnWithInfo( $status )
 	{
-		$retValue = '{"status":' . $status . ',"error":""}';
+		$retValue = '{"status":"' . $status . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	

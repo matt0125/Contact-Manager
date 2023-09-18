@@ -113,6 +113,10 @@ header {
     padding: 10px;
 }
 
+.sortable-header {
+    cursor: pointer; /* Add pointer cursor */
+}
+
 /* for the add contact modal*/
 #overlay {
     position: fixed;
