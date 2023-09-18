@@ -5,7 +5,6 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
@@ -14,7 +13,6 @@ body {
 
 h1 {
     font-family: sans-serif;
-    text-align: center;
     margin-top: 20px;
     font-size: 48px;
 }
@@ -22,12 +20,6 @@ h1 {
 header {
     color: #967BB6;
     font-family: "Helvetica", sans-serif;
-    /* increase font size */
-    text-align: left;
-    padding: 20px;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 .search-bar{
@@ -35,23 +27,23 @@ header {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    background-color: #FFFFFF;
     border-radius: 25px;
-    padding: 7px;
+    padding: 10px;
     width: 100%;
-    max-width: 400px;
+    max-width: 600px;
     box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
-    margin-top: 100px;
-    margin-left: calc(50% - 250px);
-    height: 40px;
+    max-height: 40px;
 }
 
 #search-input {
     border: none;
     border-radius: 25px;
     padding: 7px;
+    padding-top: 20px;
     width: 90%;
     outline: none;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .search-icon {
@@ -61,13 +53,22 @@ header {
 }
 
 #logout-container {
-    position: absolute;
-    top: 20px;
-    right: 30px;
+    /* top: 0px; */
+    /* right: 0px; */
 }
 
 #logout-button {
-    background-color: #fff;
+    background-color: #FFFFFF;
+    font-family: "Helvetica", sans-serif;
+    color: #231237;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+}
+#addContactBtn {
+    background-color: #FFFFFF;
     font-family: "Helvetica", sans-serif;
     color: #231237;
     border: none;
@@ -77,17 +78,31 @@ header {
     box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
 }
 
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 22px;
+    
+    cursor: pointer;
+    color: #888;
+}
+
+.small-form-container {
+    max-width: 400px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: 20px; /* Add some padding for spacing */
+}
+
 .table {
     background-color: #F0F0F0;
     font-family: "Open sans", sans-serif;
     font-size: 14px;
-    margin-top: calc(50% - 250px);
-    margin-left: calc(50% - 250px);
 }
 
 .table th{
     background-color: #D7B4F3;
     color: #FFF;
+    font-size: medium;
 }
 
 .table td{
