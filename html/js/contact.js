@@ -151,4 +151,12 @@ function readCookie(cookieName) {
     return null;
 }
 
+// Logout
+document.getElementById('logout-button').addEventListener('click', () => {
+    document.cookie = "userId=; expires=01 Jan 1970 00:00:00 UTC;";
+    document.cookie = "firstName=; expires=01 Jan 1970 00:00:00 UTC;";
+    document.cookie = "lastName=; expires=01 Jan 1970 00:00:00 UTC;";
+    window.location.href = 'index.html'
+});
+
 
