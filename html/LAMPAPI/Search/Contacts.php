@@ -2,7 +2,7 @@
 <?php
 
 	$inData = getRequestInfo();
-	
+
 	$status = "";
 
 	$conn = new mysqli("localhost", "API_User", "API_Password", "COP4331"); 	
@@ -14,7 +14,17 @@
 	{
         if( userCheck( $conn, $inData["userid"]) !== false)
         {
-            returnWithArray( getSpecificContacts( $conn, $inData["userid"], $inData["search"]) );
+            if(isset($inData["sorton"]))
+            {
+                if( verifyParams($inData["sorton"], $inData["sortdirection"]))
+                {
+                    returnWithArray( getSortedSpecificContacts( $conn, $inData["userid"], $inData["search"], $inData["sorton"], $inData["sortdirection"]) );
+                }
+            }
+            else
+            {
+                returnWithArray( getSpecificContacts( $conn, $inData["userid"], $inData["search"]) );
+            }
         }
         else
         {
@@ -53,6 +63,50 @@
         $stmt->close();
         return $result;
     }
+    function verifyParams( $sortOn, $sortDirection )
+    {
+        $error = '';
+        $validSortOn = ['contactid', 'phone', 'email', 'firstname', 'lastname'];
+        $validSortDirection = ['', 'ASC', 'DESC'];
+
+        if( !in_array( strtolower($sortOn), $validSortOn ) )
+        {
+            $error .= 'sorton paramater not valid, must be one of the following: [' . implode(', ', $validSortOn) . ']';
+        }
+
+        if( !in_array(strtoupper($sortDirection), $validSortDirection) )
+        {
+            if( $error != '')
+            {
+                $error .= '; ';
+            }
+
+            $error .= 'sortdirection paramater not valid, must be one of the following: [' . implode(', ', ['ASC', 'DESC']) . ']';
+        }
+        
+
+        if( $error != '')
+        {
+            returnWithError($error);
+        }
+        else
+        {
+            return true;
+        }
+    }
+    function getSortedSpecificContacts( $conn, $userId, $search, $sortOn, $sortDirection )
+    {
+        $searchTerm = '%' . $search . '%';
+        $sortTerm = $sortOn . ' ' . $sortDirection;
+        $stmt = $conn->prepare("SELECT * FROM Contacts WHERE userId=? AND (firstName LIKE ? OR lastName LIKE ? OR phone LIKE ? OR email LIKE ?) ORDER BY $sortTerm");
+        $stmt->bind_param("sssss", $userId, $searchTerm, $searchTerm, $searchTerm, $searchTerm);
+        $stmt->execute();
+		$result = $stmt->get_result();
+
+        $stmt->close();
+        
+        return $result;
+    }
 
 	function getRequestInfo()
 	{
@@ -79,14 +133,25 @@
 
     function returnWithArray( $result )
 	{
-		$retValue = '{';
+		$retValue = '{"result":[';
+
+        $firstrow = true;
+    
         
         while( $row = $result->fetch_assoc())
         {
+            if($firstrow)
+            {
+                $firstrow = false;
+            }
+            else
+            {
+                $retValue .= ',';
+            }
             $retValue .= '{"contactid":"' . $row['ID'] . '","firstname":"'  . $row['FirstName'] . '","lastName":"' . $row['LastName'] . '","phone":"' . $row['Phone'] . '","email":"' . $row['Email'] . '"}';
         }
         
-        $retValue .= '}';
+        $retValue .= '], "error":""}';
 
 		sendResultInfoAsJson( $retValue );
 	}

@@ -78,16 +78,27 @@
 
     function returnWithArray( $result )
 	{
-		$retValue = '{';
-        
-        while( $row = $result->fetch_assoc())
-        {
-            $retValue .= '{"contactid":"' . $row['ID'] . '","firstname":"'  . $row['FirstName'] . '","lastName":"' . $row['LastName'] . '","phone":"' . $row['Phone'] . '","email":"' . $row['Email'] . '"}';
-        }
-        
-        $retValue .= '}';
+		$retValue = '{"result":[';
 
-		sendResultInfoAsJson( $retValue );
+            $firstrow = true;
+        
+            
+            while( $row = $result->fetch_assoc())
+            {
+                if($firstrow)
+                {
+                    $firstrow = false;
+                }
+                else
+                {
+                    $retValue .= ',';
+                }
+                $retValue .= '{"contactid":"' . $row['ID'] . '","firstname":"'  . $row['FirstName'] . '","lastName":"' . $row['LastName'] . '","phone":"' . $row['Phone'] . '","email":"' . $row['Email'] . '"}';
+            }
+            
+            $retValue .= '], "error":""}';
+    
+            sendResultInfoAsJson( $retValue );
 	}
 	
 ?>

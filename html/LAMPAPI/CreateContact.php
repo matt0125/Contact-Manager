@@ -1,6 +1,8 @@
 
 <?php
-
+	header("Access-Control-Allow-Origin: *");
+	header("Access-Control-Allow-Headers: Content-Type");
+	
 	$inData = getRequestInfo();
 	
 	$status = "";
@@ -59,7 +61,7 @@
 	
 	function returnWithInfo( $status )
 	{
-		$retValue = '{"status":' . $status . ',"error":""}';
+		$retValue = '{"status":"' . $status . '","error":""}';
 		sendResultInfoAsJson( $retValue );
 	}
 	
