@@ -169,3 +169,27 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
         console.error('Sign up failed:', result.error);
     }
 });
+
+// Returns value of associated cookie name. If Cookie name doesn't exist, returns null.
+function readCookie(cookieName) {
+    let cookieArray = document.cookie.split(';');
+
+    for (let cookieString of cookieArray) {
+        let [name, value] = cookieString.trim().split('=');
+        if (name === cookieName) {
+            return value;
+        }
+    }
+    return null;
+}
+
+// Automatically login
+window.onload = function() {
+    let userId = readCookie("userId");
+    let firstName = readCookie("firstName");
+    let lastName = readCookie("lastName");
+
+    if (userId && firstName && lastName) {
+        window.location.href = 'contact.html';
+    }
+}
