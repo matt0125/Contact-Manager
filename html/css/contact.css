@@ -8,17 +8,19 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    background-color: #FFE7FF;
+    background-image: url(mainbackground.jpg);
+    background-size: cover;
 }
 
 h1 {
-    font-family: sans-serif;
-    margin-top: 20px;
-    font-size: 48px;
+    font-family: "Helvetica", sans-serif;
+    margin-top: 0px;
+    margin-left: 0px;
+    font-size: 60px;
 }
 
 header {
-    color: #967BB6;
+    color: #004F2D;
     font-family: "Helvetica", sans-serif;
 }
 
@@ -32,7 +34,7 @@ header {
     padding: 10px;
     width: 100%;
     max-width: 600px;
-    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+    box-shadow: 0px 2px 6px #004F2D;
     max-height: 40px;
 }
 
@@ -59,23 +61,23 @@ header {
 
 #logout-button {
     background-color: #FFFFFF;
-    font-family: "Helvetica", sans-serif;
-    color: #231237;
+    font-family: "Open Sans", sans-serif;
+    color: #280003;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+    box-shadow: 0px 2px 6px #004F2D;
 }
 #addContactBtn {
-    background-color: #FFFFFF;
-    font-family: "Helvetica", sans-serif;
-    color: #231237;
+    background-color: #68A691;
+    font-family: "Open Sans", sans-serif;
+    color: #280003;
     border: none;
     border-radius: 5px;
     padding: 10px 20px;
     cursor: pointer;
-    box-shadow: 0px 2px 6px rgba(59, 21, 64, 0.1);
+    box-shadow: 0px 2px 6px #004F2D;
 }
 
 .close-button {
@@ -100,7 +102,7 @@ header {
 }
 
 .table th{
-    background-color: #D7B4F3;
+    background-color: #BFD3C1;
     color: #FFF;
     font-size: medium;
 }
@@ -134,14 +136,19 @@ header {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #f2f2f2;
+    color: #280003;
     padding: 20px;
     border-radius: 5px;
     z-index: 2; /* Appear on top of overlay */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px #004F2D;
 }
 
 label, input {
     margin-bottom: 10px;
     display: block;
+}
+
+#contactForm input[type="submit"] {
+    background-color: #68A691;
 }
 
