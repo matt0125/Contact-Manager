@@ -173,13 +173,22 @@ function addContactToTable(contact){
 
 function deleteContact(contactId){
     // Show are you sure form
-
+    const confirmed = confirm("Are you sure you want to delete this contact?");
     // then delete
-    deleteContactExec(contactId);
+    if (confirmed){
+        deleteContactExec(contactId);
+    }
 }
 
 async function deleteContactExec(contactId){
     userId = readCookie("userId");
+    
+    const confirmed = confirm("Contact will be DELETED. Click OK to delete.");
+
+    if(!confirmed){
+        return;
+    }
+    
     if (!userId) {
         throw new Error("User ID is not provided.");
     }
