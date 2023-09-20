@@ -156,6 +156,7 @@ async function sortBy(col, direction) {
     }
 
 }
+
 function addContactToTable(contact){
     const contactList = document.getElementById('contactList');
     const newRow = document.createElement('tr');
@@ -164,11 +165,20 @@ function addContactToTable(contact){
         <td>${contact.lastName}</td>
         <td>${contact.phone}</td>
         <td>${contact.email}</td>
-        <td><i class="fa-solid fa-pen"></i>
-        <i onclick="deleteContact(${contact.contactid})" class="fa-regular fa-trash-can"></i></td>
+        <td>
+            <i onclick="editContact(${contact.contactid})" class="fa-solid fa-pen"></i>
+            <i onclick="deleteContact(${contact.contactid})" class="fa-regular fa-trash-can"></i>
+        </td>
     `;
     contactList.appendChild(newRow);
     console.log('Added contact to the table:', contact);
+}
+
+function editContact(contactId){
+    var overlay = document.getElementById('overlay');
+    var modal = document.getElementById('contactModal');
+    overlay.style.display = "block";
+    modal.style.display = "block";
 }
 
 function deleteContact(contactId){
