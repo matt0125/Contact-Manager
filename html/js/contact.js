@@ -174,13 +174,90 @@ function addContactToTable(contact){
     console.log('Added contact to the table:', contact);
 }
 
-function editContact(contactId){
+function editContact(contactId, show){
     var overlay = document.getElementById('overlay');
     var modal = document.getElementById('contactModal');
-    overlay.style.display = "block";
-    modal.style.display = "block";
+
+    var editBtn = document.getElementById('editBtn');
+
+    if(show){
+        overlay.style.display = "block";
+        modal.style.display = "block";
+        editBtn.style.display = "block";
+    }
+    else {
+        overlay.style.display = "none";
+        modal.style.display = "none";
+        editBtn.style.display = "none";
+    }
 }
 
+async function updateContact(contactId, updateContact){
+    try {
+        var requestBody = {
+            userid: readCookie("userId"),
+            contactid: contactId,
+            firstname: updatedContact.firstname,
+            lastname: updatedContact.lastname,
+            phone: updatedContact.phone,
+            email: updatedContact.email
+        };
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(requestBody),
+            redirect: 'follow'
+        };
+
+        const response = await fetch("http://poosd-project.com/LAMPAPI/EditContact.php", requestOptions);
+
+        if (response.ok) {
+            const data = await response.json();
+            if(data.status === "Success") {
+                console.log("Contact updated successfully.");
+                return true;
+            } else {
+                console.log("Failed to update contact:", data.error || "");
+                return false;
+            }
+        } else {
+            throw new Error("Failed to update contact.");
+        }
+    } catch (error) {
+        console.error("Error while updating contact:", error);
+        return false;
+    }
+}
+
+// // event listener for "save changes" button in edit contact form
+// document.getElementById('contactForm').addEventListener('edit', async function(e) {
+//     e.preventDefault;
+
+//     var editedFirstName = document.getElementById('FirstNameInput').value;
+//     var editedLastName = document.getElementById('LastNameInput').value;
+//     var editedPhone = document.getElementById('PhoneInput').value;
+//     var editedEmail = document.getElementById('EmailInput').value;
+
+//     var updatedContact = {
+//         firstname: editedFirstName,
+//         lastname: editedLastName,
+//         phone: editedPhone,
+//         email: editedEmail
+//     };
+
+//     const success = await updateContact(contactId, updatedContact);
+
+//     if(success) {
+//         editContact();
+//         populateContacts();
+//     } else {
+//         console.log("Failed to add contact", result.error || "");
+//     }
+// });
 function deleteContact(contactId){
     // Show are you sure form
     const confirmed = confirm("Are you sure you want to delete this contact?");
