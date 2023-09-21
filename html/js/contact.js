@@ -174,13 +174,14 @@ function addContactToTable(contact){
     console.log('Added contact to the table:', contact);
 }
 
+
 function editContact(contactId, show){
     var overlay = document.getElementById('overlay');
     var modal = document.getElementById('contactModal');
 
     var editBtn = document.getElementById('editBtn');
 
-    if(show){
+    if(show === true){
         overlay.style.display = "block";
         modal.style.display = "block";
         editBtn.style.display = "block";
@@ -219,7 +220,8 @@ async function updateContact(contactId, updateContact){
             const data = await response.json();
             if(data.status === "Success") {
                 console.log("Contact updated successfully.");
-                return true;
+                editContact(contactId, true);
+                populateContacts();
             } else {
                 console.log("Failed to update contact:", data.error || "");
                 return false;
@@ -258,6 +260,7 @@ async function updateContact(contactId, updateContact){
 //         console.log("Failed to add contact", result.error || "");
 //     }
 // });
+
 function deleteContact(contactId){
     // Show are you sure form
     const confirmed = confirm("Are you sure you want to delete this contact?");
@@ -411,5 +414,3 @@ document.getElementById('logout-button').addEventListener('click', () => {
     document.cookie = "lastName=; expires=01 Jan 1970 00:00:00 UTC;";
     window.location.href = 'index.html'
 });
-
-
