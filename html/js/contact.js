@@ -155,6 +155,7 @@ async function sortBy(col, direction) {
     if (!userId) {
         throw new Error("User ID is not provided.");
     }
+
     if (typeof userId !== "string" && typeof userId !== "number") {
         throw new Error("Invalid User ID type. Expected string or number.");
     }
@@ -300,17 +301,16 @@ async function getContactById(contactId)
 }
 
 async function populateFields(contactId){
-    
     // get contact
     const contact = await getContactById(contactId);
     
     // update fields
-
     document.getElementById('firstNameInput').value = contact.firstName;
     document.getElementById('lastNameInput').value = contact.lastName;
     document.getElementById('phoneInput').value = contact.phone;
     document.getElementById('emailInput').value = contact.email;
 }
+
 document.getElementById('editBtn').addEventListener('click', () => {
     updateContact(document.getElementById('contactIdField').value);
 });
@@ -463,6 +463,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
     var phone = document.getElementById('phoneInput').value;
     var email = document.getElementById('emailInput').value;
 
+    const enteredEmail = email.value.trim();
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -497,8 +499,6 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
         console.log('Error occurred:', error);
     }
 });
-
-
 
 // Returns value of associated cookie name. If Cookie name doesn't exist, returns null.
 function readCookie(cookieName) {
