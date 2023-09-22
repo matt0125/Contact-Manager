@@ -166,7 +166,8 @@ function addContactToTable(contact){
         <td>${contact.phone}</td>
         <td>${contact.email}</td>
         <td>
-            <i onclick="editContact(${contact.contactid})" class="fa-solid fa-pen"></i>
+        
+            <i onclick="editContact(${contact.contactid}, true)" class="fa-solid fa-pen"></i>
             <i onclick="deleteContact(${contact.contactid})" class="fa-regular fa-trash-can"></i>
         </td>
     `;
@@ -180,28 +181,103 @@ function editContact(contactId, show){
     var modal = document.getElementById('contactModal');
 
     var editBtn = document.getElementById('editBtn');
+    var createBtn = document.getElementById('submitBtn');
 
     if(show === true){
         overlay.style.display = "block";
         modal.style.display = "block";
         editBtn.style.display = "block";
+        createBtn.style.display = "none";
+
+        populateFields(contactId);
     }
     else {
         overlay.style.display = "none";
         modal.style.display = "none";
         editBtn.style.display = "none";
+        createBtn.style.display = "block";
+
+        clearFields();
     }
 }
 
-async function updateContact(contactId, updateContact){
+async function getContactById(contactId)
+{
+    var userId = readCookie("userId");
+    // "userid" "contactid"
+    
+    if (!userId) {
+        throw new Error("User ID is not provided.");
+    }
+    if (typeof userId !== "string" && typeof userId !== "number") {
+        throw new Error("Invalid User ID type. Expected string or number.");
+    }
+    
+    try {
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "userid": userId.toString(),
+            "contactid": contactId.toString()
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        }
+
+        const response = await fetch("http://poosd-project.com/LAMPAPI/Get/Contact.php", requestOptions);
+
+        if (response.ok) {
+            var data = await response.json();
+
+            const result = {
+                firstName: data.result.firstname,
+                lastName: data.result.lastName,
+                phone: data.result.phone,
+                email: data.result.email,
+                id: data.result.contactid
+            }
+
+            return result;
+        } else {
+            throw new Error("Failed to fetch contact.");
+        }
+    } 
+    catch (error) {
+        throw error;
+    } 
+}
+
+async function populateFields(contactId){
+    
+    // get contact
+    const contact = await getContactById(contactId);
+    
+    // update fields
+
+    document.getElementById('firstNameInput').value = contact.firstName;
+    document.getElementById('lastNameInput').value = contact.lastName;
+    document.getElementById('phoneInput').value = contact.phone;
+    document.getElementById('emailInput').value = contact.email;
+    document.getElementById('contactIdField').value = contact.id;
+}
+document.getElementById('editBtn').addEventListener('click', () => {
+    updateContact(document.getElementById('contactIdField').value);
+});
+
+async function updateContact(contactId){
     try {
         var requestBody = {
             userid: readCookie("userId"),
             contactid: contactId,
-            firstname: updatedContact.firstname,
-            lastname: updatedContact.lastname,
-            phone: updatedContact.phone,
-            email: updatedContact.email
+            firstName: document.getElementById('FirstNameInput').value,
+            lastName: document.getElementById('LastNameInput').value,
+            phone: document.getElementById('PhoneInput').value,
+            email: document.getElementById('EmailInput').value
         };
 
         var myHeaders = new Headers();
@@ -235,31 +311,13 @@ async function updateContact(contactId, updateContact){
     }
 }
 
-// // event listener for "save changes" button in edit contact form
-// document.getElementById('contactForm').addEventListener('edit', async function(e) {
-//     e.preventDefault;
+function clearFields() {
+    document.getElementById('firstNameInput').value = "";
+    document.getElementById('lastNameInput').value = "";
+    document.getElementById('phoneInput').value = "";
+    document.getElementById('emailInput').value = "";
+}
 
-//     var editedFirstName = document.getElementById('FirstNameInput').value;
-//     var editedLastName = document.getElementById('LastNameInput').value;
-//     var editedPhone = document.getElementById('PhoneInput').value;
-//     var editedEmail = document.getElementById('EmailInput').value;
-
-//     var updatedContact = {
-//         firstname: editedFirstName,
-//         lastname: editedLastName,
-//         phone: editedPhone,
-//         email: editedEmail
-//     };
-
-//     const success = await updateContact(contactId, updatedContact);
-
-//     if(success) {
-//         editContact();
-//         populateContacts();
-//     } else {
-//         console.log("Failed to add contact", result.error || "");
-//     }
-// });
 
 function deleteContact(contactId){
     // Show are you sure form
@@ -350,7 +408,7 @@ document.getElementById('addContactBtn').addEventListener('click', toggleAddCont
 document.getElementById('closeForm').addEventListener('click', toggleAddContact);
 
 // Create contact button functionality
-document.getElementById('contactForm').addEventListener('submit', async function(e) {
+document.getElementById('submitBtn').addEventListener('click', async function(e) {
     e.preventDefault();
 
     var firstName = document.getElementById('firstNameInput').value;
@@ -383,6 +441,7 @@ document.getElementById('contactForm').addEventListener('submit', async function
         if (result.status === "Success") {
             console.log("successfully added contact");
             toggleAddContact();
+            clearFields();
             populateContacts();
         } else {
             console.log("Failed to add contact", result.error || "");
