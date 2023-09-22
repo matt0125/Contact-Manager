@@ -18,10 +18,11 @@ body {
   max-width: 1000px;
   width: 100%;
 
-  height: 600px;
+  height: 650px;
 
   display: flex;
 }
+
 .rounded-frame-half {
   flex: 1;
   padding: 20px;
@@ -83,4 +84,28 @@ h2 {
   font-weight: bold;
 }
 
+#signUpForm label {
+  margin-left: 0px;
+}
+
+/* input:invalid {
+  border: 1px solid red;
+  background-color: #ffeeee;
+} */
+
+/* input:invalid:not(:placeholder-shown) {
+  border: 1px solid red;
+  background-color: #ffeeee;
+} */
+
+input:invalid + span.error-message {
+  color: red;
+  display: block;
+  font-size: 12px;
+}
+
+.normal {
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
 /* #FFE7FF */
