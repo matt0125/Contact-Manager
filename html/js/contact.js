@@ -160,6 +160,7 @@ async function sortBy(col, direction) {
 function addContactToTable(contact){
     const contactList = document.getElementById('contactList');
     const newRow = document.createElement('tr');
+    newRow.setAttribute('data-contact-id', contact.contactid); // THis stores the contact ID
     newRow.innerHTML = `
         <td>${contact.firstname}</td>
         <td>${contact.lastName}</td>
@@ -167,8 +168,8 @@ function addContactToTable(contact){
         <td>${contact.email}</td>
         <td>
         
-            <i onclick="editContact(${contact.contactid}, true)" class="fa-solid fa-pen"></i>
-            <i onclick="deleteContact(${contact.contactid})" class="fa-regular fa-trash-can"></i>
+            <i onclick="editContact(event, true)" class="fa-solid fa-pen"></i>
+            <i onclick="deleteContact(event)" class="fa-regular fa-trash-can"></i>
         </td>
     `;
     contactList.appendChild(newRow);
@@ -176,7 +177,7 @@ function addContactToTable(contact){
 }
 
 
-function editContact(contactId, show){
+function editContact(event, show){
     var overlay = document.getElementById('overlay');
     var modal = document.getElementById('contactModal');
 
@@ -184,6 +185,10 @@ function editContact(contactId, show){
     var createBtn = document.getElementById('submitBtn');
 
     if(show === true){
+        const rowElement = event.target.closest("tr");
+        const contactId = rowElement.dataset.contactId;
+
+        console.log("edit showing true");
         overlay.style.display = "block";
         modal.style.display = "block";
         editBtn.style.display = "block";
@@ -263,7 +268,6 @@ async function populateFields(contactId){
     document.getElementById('lastNameInput').value = contact.lastName;
     document.getElementById('phoneInput').value = contact.phone;
     document.getElementById('emailInput').value = contact.email;
-    document.getElementById('contactIdField').value = contact.id;
 }
 document.getElementById('editBtn').addEventListener('click', () => {
     updateContact(document.getElementById('contactIdField').value);
@@ -274,10 +278,10 @@ async function updateContact(contactId){
         var requestBody = {
             userid: readCookie("userId"),
             contactid: contactId,
-            firstName: document.getElementById('FirstNameInput').value,
-            lastName: document.getElementById('LastNameInput').value,
-            phone: document.getElementById('PhoneInput').value,
-            email: document.getElementById('EmailInput').value
+            firstName: document.getElementById('firstNameInput').value,
+            lastName: document.getElementById('lastNameInput').value,
+            phone: document.getElementById('phoneInput').value,
+            email: document.getElementById('emailInput').value
         };
 
         var myHeaders = new Headers();
@@ -319,9 +323,12 @@ function clearFields() {
 }
 
 
-function deleteContact(contactId){
+function deleteContact(event){
     // Show are you sure form
     const confirmed = confirm("Are you sure you want to delete this contact?");
+
+    const rowElement = event.target.closest("tr");
+    const contactId = rowElement.dataset.contactId;
     // then delete
     if (confirmed){
         deleteContactExec(contactId);
@@ -330,8 +337,6 @@ function deleteContact(contactId){
 
 async function deleteContactExec(contactId){
     userId = readCookie("userId");
-    
-    const confirmed = confirm("Contact will be DELETED. Click OK to delete.");
 
     if(!confirmed){
         return;
