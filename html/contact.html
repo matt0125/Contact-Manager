@@ -56,23 +56,23 @@
                     <i class="fas fa-times close-button fa-md" id="closeForm" onmouseover="this.style.color='#f00';" onmouseout="this.style.color='#888';"></i> <!-- Close button -->
                     <form id="contactForm">
                         <div class="form-group">
-                            <label for="firstNameInput">First Name</label>
-                            <input type="text" id="firstNameInput" name="firstName" class="form-control">
+                            <label for="firstNameInput">*First Name</label>
+                            <input type="text" id="firstNameInput" name="firstName" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="lastNameInput">Last Name</label>
-                            <input type="text" id="lastNameInput" name="lastName" class="form-control">
+                            <label for="lastNameInput">*Last Name</label>
+                            <input type="text" id="lastNameInput" name="lastName" class="form-control" required>
                         </div>
                         
                         <div class="form-group">
-                            <label for="phoneInput">Phone Number</label>
-                            <input type="tel" id="phoneInput" name="phone" class="form-control" autocomplete="phone">
+                            <label for="phoneInput">*Phone Number</label>
+                            <input type="tel" id="phoneInput" name="phone" pattern="[0-9]{10}" class="form-control" autocomplete="phone" title="Enter a 9-digit number like so: xxxxxxxxxx" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="emailInput">Email Address</label>
-                            <input type="email" id="emailInput" name="email" class="form-control" autocomplete="email">
+                            <label for="emailInput">*Email Address</label>
+                            <input type="email" id="emailInput" name="email" class="form-control" autocomplete="email" required>
                         </div>
 
                         <input type="hidden" id="contactIdField" name="contactId">
