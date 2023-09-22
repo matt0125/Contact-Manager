@@ -1,15 +1,57 @@
 const searchInput = document.getElementById("search-input");
 const searchIcon = document.getElementById("search-icon");
+const searchResults = document.getElementById("search-results");
 
-searchIcon.addEventListener("click", function (){
-    const searchTerm = searchInput.value;
+searchIcon.addEventListener("click", async () => {
+    const searchTerm = searchInput.value.trim();
+
     if(searchTerm.trim() !== ""){
-        alert('Searching for: ${searchTerm}');
+        try {
+            //API call to look for accounts
+            const searchResultsData = await searchAccounts(searchTerm);
+
+            // displays search results
+            displaySearchResults(searchResultsData);
+        } catch (error) {
+            console.error("Error searching for accoutns:", error);
+        }
     }
     else{
         alert("Please enter a search term.");
     }
 });
+
+async function searchAccounts(searchTerm) {
+    const response = await fetch("http://poosd-project.com/LAMPAPI/Search/Contacts.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ searchTerm }),
+    });
+
+    if (response.ok) {
+        return await response.json();
+    } else {
+        throw new Error("Failed to search for accounts.");
+    }
+}
+
+// function that displays search results
+function displaySearchResults(data) {
+    // clears previous search results
+    searchResults.innerHTML = "";
+
+    if (data && data.length > 0){
+        data.forEach((account) => {
+            const resultItem = document.createElement("div");
+            resultItem.textContent = `${account.firstName} ${account.lastName}`;
+            searchResults.appendChild(resultItem);
+        });
+    } else {
+        searchResults.textContent = "No results found.";
+    }
+}
 
 async function getContacts(userId) {
     if (!userId) {
