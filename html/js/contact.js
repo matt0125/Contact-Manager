@@ -232,6 +232,7 @@ function editContact(event, show){
         const contactId = rowElement.dataset.contactId;
 
         console.log("edit showing true");
+        console.log("ID: " + contactId);
         overlay.style.display = "block";
         modal.style.display = "block";
         editBtn.style.display = "block";
@@ -309,22 +310,33 @@ async function populateFields(contactId){
     document.getElementById('lastNameInput').value = contact.lastName;
     document.getElementById('phoneInput').value = contact.phone;
     document.getElementById('emailInput').value = contact.email;
+    document.getElementById('contactIdField').value = contactId;
 }
 
-document.getElementById('editBtn').addEventListener('click', () => {
-    updateContact(document.getElementById('contactIdField').value);
+document.getElementById('editBtn').addEventListener('click', (event) => {
+    //alert("About to update contact w id: " + document.getElementById('contactIdField').value);
+    updateContact(document.getElementById('contactIdField').value, event);
 });
 
-async function updateContact(contactId){
+async function updateContact(contactId, event){
+    event.preventDefault();
+
     try {
-        var requestBody = {
-            userid: readCookie("userId"),
-            contactid: contactId,
-            firstName: document.getElementById('firstNameInput').value,
-            lastName: document.getElementById('lastNameInput').value,
-            phone: document.getElementById('phoneInput').value,
-            email: document.getElementById('emailInput').value
-        };
+    //     //alert("Trying to update with the following values: " +
+    //   "contactId = " + contactId + ", " +
+    //   "userId = " + readCookie("userId") + ", " +
+    //   "firstName = " + document.getElementById('firstNameInput').value + ", " +
+    //   "lastName = " + document.getElementById('lastNameInput').value + ", " +
+    //   "phone = " + document.getElementById('phoneInput').value + ", " +
+    //   "email = " + document.getElementById('emailInput').value);
+        var requestBody = JSON.stringify({
+            "contactid": contactId,
+            "userid": readCookie("userId"),
+            "firstname": document.getElementById('firstNameInput').value,
+            "lastname": document.getElementById('lastNameInput').value,
+            "phone": document.getElementById('phoneInput').value,
+            "email": document.getElementById('emailInput').value
+        });
 
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
@@ -332,7 +344,7 @@ async function updateContact(contactId){
         var requestOptions = {
             method: 'POST',
             headers: myHeaders,
-            body: JSON.stringify(requestBody),
+            body: requestBody,
             redirect: 'follow'
         };
 
@@ -340,18 +352,20 @@ async function updateContact(contactId){
 
         if (response.ok) {
             const data = await response.json();
-            if(data.status === "Success") {
-                console.log("Contact updated successfully.");
-                editContact(contactId, true);
+            console.log(data);
+            if(data.status === "Contact updated successfully") {
+                editContact(contactId, false);
                 populateContacts();
             } else {
                 console.log("Failed to update contact:", data.error || "");
                 return false;
             }
         } else {
+            //alert("failed to update");
             throw new Error("Failed to update contact.");
         }
     } catch (error) {
+        //alert("failed to update here");
         console.error("Error while updating contact:", error);
         return false;
     }
@@ -379,10 +393,6 @@ function deleteContact(event){
 
 async function deleteContactExec(contactId){
     userId = readCookie("userId");
-
-    if(!confirmed){
-        return;
-    }
     
     if (!userId) {
         throw new Error("User ID is not provided.");
@@ -423,6 +433,7 @@ async function deleteContactExec(contactId){
 }
 
 async function populateContacts() {
+    //alert("Heres populate contacts");
     document.getElementById("contactList").innerHTML = '';
     let userId = readCookie("userId");
     if (userId) {
@@ -443,16 +454,28 @@ async function populateContacts() {
 populateContacts();
 
 // Add contact form
-function toggleAddContact() {
+function toggleAddContact(show) {
     var overlay = document.getElementById('overlay');
     var modal = document.getElementById('contactModal');
+    var editBtn = document.getElementById('editBtn');
+    var createBtn = document.getElementById('submitBtn');
     
-    overlay.style.display = overlay.style.display === "none" ? "block" : "none";
-    modal.style.display = modal.style.display === "none" ? "block" : "none";
+    if (show === true) {
+        overlay.style.display = "block";
+        modal.style.display = "block";
+        editBtn.style.display = "none";
+        createBtn.style.display = "block";
+    } else {
+        overlay.style.display = "none";
+        modal.style.display = "none";
+        editBtn.style.display = "block";
+        createBtn.style.display = "none";
+    }
+    
 }
 
-document.getElementById('addContactBtn').addEventListener('click', toggleAddContact);
-document.getElementById('closeForm').addEventListener('click', toggleAddContact);
+document.getElementById('addContactBtn').addEventListener('click', () => toggleAddContact(true));
+document.getElementById('closeForm').addEventListener('click', () => toggleAddContact(true));
 
 // Create contact button functionality
 document.getElementById('submitBtn').addEventListener('click', async function(e) {
@@ -463,7 +486,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
     var phone = document.getElementById('phoneInput').value;
     var email = document.getElementById('emailInput').value;
 
-    const enteredEmail = email.value.trim();
+    const enteredEmail = email.trim();
 
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -489,7 +512,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
 
         if (result.status === "Success") {
             console.log("successfully added contact");
-            toggleAddContact();
+            toggleAddContact(false);
             clearFields();
             populateContacts();
         } else {
