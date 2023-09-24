@@ -321,6 +321,46 @@ document.getElementById('editBtn').addEventListener('click', (event) => {
 async function updateContact(contactId, event){
     event.preventDefault();
 
+    const editFirstName = document.getElementById('firstNameInput').value.trim();
+    const editLastName = document.getElementById('lastNameInput').value.trim();
+    const editPhone = document.getElementById('phoneInput').value.trim();
+    const editEmail = document.getElementById('emailInput').value.trim();
+
+    let hasError = false;
+
+    // Validation
+    if (editFirstName === '') {
+        document.getElementById('editFirstNameError').textContent = 'Please enter First Name.';
+        hasError = true;
+    } else {
+        document.getElementById('editFirstNameError').textContent = '';
+    }
+
+    if (editLastName === '') {
+        document.getElementById('editLastNameError').textContent = 'Please enter Last Name.';
+        hasError = true;
+    } else {
+        document.getElementById('editLastNameError').textContent = '';
+    }
+
+    if (!/^[0-9]{10}$/.test(editPhone) || editPhone === '') {
+        document.getElementById('editPhoneError').textContent = 'Please enter a valid 10-digit phone number. xxxxxxxxxx';
+        hasError = true;
+    } else {
+        document.getElementById('editPhoneError').textContent = '';
+    }
+
+    if (!/^.+@.+\..+$/.test(editEmail) || editEmail === '') {
+        document.getElementById('editEmailError').textContent = 'Please enter valid Email Address.';
+        hasError = true;
+    } else {
+        document.getElementById('editEmailError').textContent = '';
+    }
+
+    if(hasError){
+        return;
+    }
+
     try {
     //     //alert("Trying to update with the following values: " +
     //   "contactId = " + contactId + ", " +
@@ -485,6 +525,40 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
     var lastName = document.getElementById('lastNameInput').value;
     var phone = document.getElementById('phoneInput').value;
     var email = document.getElementById('emailInput').value;
+
+    var errorMessages = {
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: ''
+    };
+
+    if (firstName.trim() === '') {
+        errorMessages.firstName = 'Please enter First Name.';
+    }
+
+    if (lastName.trim() === '') {
+        errorMessages.lastName = 'Please enter Last Name.';
+    }
+
+    if (!/^[0-9]{10}$/.test(phone) || phone.trim() === '') {
+        errorMessages.phone = 'Please enter a valid 10-digit phone number.';
+    }
+
+    if (!/^.+@.+\..+$/.test(email)||email.trim() === '') {
+        errorMessages.email = 'Please enter Email Address.';
+    }
+
+    document.getElementById('firstNameError').textContent = errorMessages.firstName;
+    document.getElementById('lastNameError').textContent = errorMessages.lastName;
+    document.getElementById('phoneError').textContent = errorMessages.phone;
+    document.getElementById('emailError').textContent = errorMessages.email;
+
+    var hasError = Object.values(errorMessages).some(message => message !== '');
+
+    if (hasError) {
+        return;
+    }
 
     const enteredEmail = email.trim();
 
