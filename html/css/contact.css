@@ -157,6 +157,10 @@ label, input {
     font-weight: bold;
 }
 
+input:valid {
+    border: 1px solid green;
+}
+
 input:invalid {
     border: 1px solid red;
     background-color: #ffeeee;
@@ -172,3 +176,30 @@ input:invalid + span.error-message {
     display: block;
     font-size: 12px;
 }
+
+#editFirstNameError, #editLastNameError, #editPhoneError, #editEmailError{
+    color: red;
+    font-size: 14px;
+}
+
+/*tried to make the add contact form not red*/
+input.error {
+    border: 1px solid red;
+    background-color: #ffeeee;
+}
+/*
+input.error:focus {
+    border: 1px solid red;
+    background-color: #ffeeee;
+}
+
+span.error-message {
+    color: red;
+    display: none; Hide error messages by default 
+    font-size: 12px;
+ }
+
+input.error + span.error-message {
+    display: block;
+    font-size: 12px;
+}  */
