@@ -74,6 +74,7 @@ body {
 .form-label{
   font-size: 18px;
   color: #280003;
+  text-align: left;
 }
 
 .col-form-label {
@@ -109,4 +110,44 @@ input:invalid + span.error-message {
   border: 1px solid #ccc;
   background-color: #fff;
 }
+
+.error-highlight {
+  border: 2px solid red;
+  box-shadow: 0 0 10px red;
+}
+
+/* for the eye icon */
+.toggle-password i {
+  font-size: 1.25rem;
+  color: #280003;
+}
+
+#loginTogglePassword {
+  position: absolute;
+  transform: translateY(-50%);
+  left: 440px;
+  top: 307px;
+  background: none; /* Set the background to none */
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0; /* Remove padding to make the button smaller */
+}
+
+#togglePassword {
+  position: absolute;
+  transform: translateY(-50%);
+  left: 440px;
+  top: 380px;
+  background: none; /* Set the background to none */
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0; /* Remove padding to make the button smaller */
+}
+
+.fa-eye-slash {
+  color: red;
+}
+
 /* #FFE7FF */
