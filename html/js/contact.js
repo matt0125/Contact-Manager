@@ -203,7 +203,7 @@ async function sortBy(col, direction) {
 function addContactToTable(contact){
     const contactList = document.getElementById('contactList');
     const newRow = document.createElement('tr');
-    newRow.setAttribute('data-contact-id', contact.contactid); // THis stores the contact ID
+    newRow.setAttribute('data-contact-id', contact.contactid); // This stores the contact ID
     newRow.innerHTML = `
         <td>${contact.firstname}</td>
         <td>${contact.lastName}</td>
@@ -355,7 +355,7 @@ async function updateContact(contactId, event){
             console.log(data);
             if(data.status === "Contact updated successfully") {
                 editContact(contactId, false);
-                populateContacts();
+                searchAPI("");
             } else {
                 console.log("Failed to update contact:", data.error || "");
                 return false;
@@ -429,7 +429,7 @@ async function deleteContactExec(contactId){
     catch (error) {
         throw error;
     }
-    populateContacts();
+    searchAPI("");
 }
 
 async function populateContacts() {
@@ -451,7 +451,7 @@ async function populateContacts() {
     
 }
 
-populateContacts();
+searchAPI("");
 
 // Add contact form
 function toggleAddContact(show) {
@@ -475,7 +475,7 @@ function toggleAddContact(show) {
 }
 
 document.getElementById('addContactBtn').addEventListener('click', () => toggleAddContact(true));
-document.getElementById('closeForm').addEventListener('click', () => toggleAddContact(true));
+document.getElementById('closeForm').addEventListener('click', () => toggleAddContact(false));
 
 // Create contact button functionality
 document.getElementById('submitBtn').addEventListener('click', async function(e) {
@@ -514,7 +514,7 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
             console.log("successfully added contact");
             toggleAddContact(false);
             clearFields();
-            populateContacts();
+            searchAPI("");
         } else {
             console.log("Failed to add contact", result.error || "");
         }
@@ -543,3 +543,65 @@ document.getElementById('logout-button').addEventListener('click', () => {
     document.cookie = "lastName=; expires=01 Jan 1970 00:00:00 UTC;";
     window.location.href = 'index.html'
 });
+
+// Search
+document.getElementById('search-input').addEventListener('keyup', async (event) => {
+    const query = event.target.value;
+    const results = await searchAPI(query);
+});
+
+// Calls the search API with input query, and updates table with results.
+async function searchAPI(query) {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({
+        "userid": readCookie("userId"),
+        "search": query,
+        "sorton": "firstname"
+    });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    try {
+        const response = await fetch("http://poosd-project.com/LAMPAPI/Search/Contacts.php", requestOptions);
+        const result = await response.json();
+
+        console.log(result);
+
+        updateTable(result.result);
+    } catch (error) {
+        console.log('Error occurred:', error);
+    }
+}
+
+// Updates table with contacts in data
+function updateTable(data) {
+    const contactList = document.getElementById('contactList');
+    contactList.innerHTML = '';
+
+    console.log("This is data:");
+    console.log(data);
+
+    data.forEach(row => {
+        console.log("This is a row:");
+        console.log(row);
+        const newRowElement = document.createElement('tr');
+        newRowElement.innerHTML = `
+            <td>${row.firstname}</td>
+            <td>${row.lastName}</td>
+            <td>${row.phone}</td>
+            <td>${row.email}</td>
+            <td>
+                <i onclick="editContact(event, true)" class="fa-solid fa-pen"></i>
+                <i onclick="deleteContact(event)" class="fa-regular fa-trash-can"></i>
+            </td>`;
+        newRowElement.setAttribute('data-contact-id', row.contactid);
+        contactList.appendChild(newRowElement);
+    });
+}
