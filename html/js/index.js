@@ -145,6 +145,8 @@ async function signup(firstname, lastname, username, password) {
     }
 }
 
+const signupConfirmPasswordInput = document.getElementById("confirmPassword");
+
 document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -160,6 +162,9 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
         console.log("Passwords don't match");
         signUpError.classList.add('error-message');
         signUpError.textContent = "Passwords do not match. Please try again.";
+
+        signupPasswordInput.classList.add('error-highlight');
+        signupConfirmPasswordInput.classList.add('error-highlight');
         return;
     }
 
@@ -167,6 +172,10 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
     if (result.success) {
         errorMsg.textContent = "Succesfully signed up. Please log in.";
         console.log('Successfully signed up');
+
+        signupPasswordInput.classList.remove('error-highlight');
+        signupConfirmPasswordInput.classList.remove('error-highlight');
+
         toggleForm('login');
     } else {
         console.error('Sign up failed:', result.error);
