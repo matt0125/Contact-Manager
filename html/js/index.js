@@ -83,6 +83,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         errorMsg.textContent = '';
         errorMsg.classList.remove('error-message');
 
+        loginPasswordInput.classList.remove('error-highlight');
+
         window.location.href = 'contact.html';
     } else {
         console.error('Login failed:', result.error);
@@ -92,6 +94,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             errorMsg.textContent = "User name does not exist";
         } else if (result.error === "Incorrect password") {
             errorMsg.textContent = "User name exists, incorrect password";
+            loginPasswordInput.classList.add('error-highlight');
         } else {
             errorMsg.textContent = "Unknown error occurred. Please try again.";
         }
@@ -193,3 +196,29 @@ window.onload = function() {
         window.location.href = 'contact.html';
     }
 }
+
+// password hide/show functionality (LOGIN)
+const loginPasswordInput = document.getElementById("loginPassword");
+const loginToggleIcon = document.getElementById("loginToggleIcon");
+const signupPasswordInput = document.getElementById("signUpPassword");
+const signupToggleIcon = document.getElementById("toggleIcon");
+
+function togglePasswordVisibility(passwordInput, toggleIcon) {
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    toggleIcon.classList.remove("fa-eye");
+    toggleIcon.classList.add("fa-eye-slash");
+  } else {
+    passwordInput.type = "password";
+    toggleIcon.classList.remove("fa-eye-slash");
+    toggleIcon.classList.add("fa-eye");
+  }
+}
+
+document.getElementById("togglePassword").addEventListener("click", () => {
+  togglePasswordVisibility(signupPasswordInput, signupToggleIcon);
+});
+
+document.getElementById("loginTogglePassword").addEventListener("click", () => {
+  togglePasswordVisibility(loginPasswordInput, loginToggleIcon);
+});
