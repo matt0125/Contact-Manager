@@ -59,6 +59,7 @@ body {
 .custom-color-btn:active {
   background-color: #BFD3C1;
   border-color: transparent;
+  color:#280003;
 }
 
 .error-message {
