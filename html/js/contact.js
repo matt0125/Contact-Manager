@@ -13,7 +13,7 @@ searchIcon.addEventListener("click", async () => {
             // displays search results
             displaySearchResults(searchResultsData);
         } catch (error) {
-            console.error("Error searching for accoutns:", error);
+            console.error("Error searching for accounts:", error);
         }
     }
     else{
@@ -89,7 +89,8 @@ async function getContacts(userId) {
         throw error;
     }
 }
-
+var sortCol = "";
+var sortDirection = "";
 document.querySelectorAll(".sortable-header").forEach(function (header) {
     header.addEventListener("click", function () {
         var icon = this.querySelector("i");
@@ -144,12 +145,14 @@ document.querySelectorAll(".sortable-header").forEach(function (header) {
 
         // Call the sortBy function with parameters
         sortBy(col, direction);
-
+        
         // You can perform other actions here as needed
     });
 });
 
 async function sortBy(col, direction) {
+    sortCol = col;
+    sortDirection = direction;
     
     userId = readCookie("userId");
     if (!userId) {
@@ -164,10 +167,13 @@ async function sortBy(col, direction) {
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
+        var searchTerm = document.getElementById('search-input').value;
+        
         var raw = JSON.stringify({
             "userid": userId,
             "sorton": col,
-            "sortdirection": direction
+            "sortdirection": direction,
+            "search": searchTerm
         });
 
         var requestOptions = {
@@ -188,7 +194,7 @@ async function sortBy(col, direction) {
                     addContactToTable(contact);
                 }
             } catch (error) {
-                console.error("Error in populateContacts:", error.message);
+                console.error("Error in searchAPI(\"\"):", error.message);
             }
         } else {
             throw new Error("Failed to sort contacts.");
@@ -230,6 +236,8 @@ function editContact(event, show){
     if(show === true){
         const rowElement = event.target.closest("tr");
         const contactId = rowElement.dataset.contactId;
+        
+        populateFields(contactId);
 
         console.log("edit showing true");
         console.log("ID: " + contactId);
@@ -237,8 +245,6 @@ function editContact(event, show){
         modal.style.display = "block";
         editBtn.style.display = "block";
         createBtn.style.display = "none";
-
-        populateFields(contactId);
     }
     else {
         overlay.style.display = "none";
@@ -313,9 +319,10 @@ async function populateFields(contactId){
     document.getElementById('contactIdField').value = contactId;
 }
 
-document.getElementById('editBtn').addEventListener('click', (event) => {
+document.getElementById('editBtn').addEventListener('click', async (event) => {
     //alert("About to update contact w id: " + document.getElementById('contactIdField').value);
-    updateContact(document.getElementById('contactIdField').value, event);
+    await updateContact(document.getElementById('contactIdField').value, event);
+    toggleAddContact(false);
 });
 
 async function updateContact(contactId, event){
@@ -362,13 +369,7 @@ async function updateContact(contactId, event){
     }
 
     try {
-    //     //alert("Trying to update with the following values: " +
-    //   "contactId = " + contactId + ", " +
-    //   "userId = " + readCookie("userId") + ", " +
-    //   "firstName = " + document.getElementById('firstNameInput').value + ", " +
-    //   "lastName = " + document.getElementById('lastNameInput').value + ", " +
-    //   "phone = " + document.getElementById('phoneInput').value + ", " +
-    //   "email = " + document.getElementById('emailInput').value);
+
         var requestBody = JSON.stringify({
             "contactid": contactId,
             "userid": readCookie("userId"),
@@ -472,25 +473,6 @@ async function deleteContactExec(contactId){
     searchAPI("");
 }
 
-async function populateContacts() {
-    //alert("Heres populate contacts");
-    document.getElementById("contactList").innerHTML = '';
-    let userId = readCookie("userId");
-    if (userId) {
-        try {
-            const contacts = await getContacts(userId);
-            for (const contact of contacts.result) {
-                addContactToTable(contact);
-            }
-        } catch (error) {
-            console.error("Error in populateContacts:", error.message);
-        }
-    } else {
-        console.error("UserId not found in cookies.");
-    }
-    
-}
-
 searchAPI("");
 
 // Add contact form
@@ -510,6 +492,8 @@ function toggleAddContact(show) {
         modal.style.display = "none";
         editBtn.style.display = "block";
         createBtn.style.display = "none";
+
+        clearFields();
     }
     
 }
@@ -520,6 +504,15 @@ document.getElementById('closeForm').addEventListener('click', () => toggleAddCo
 // Create contact button functionality
 document.getElementById('submitBtn').addEventListener('click', async function(e) {
     e.preventDefault();
+
+    const form = document.getElementById('contactForm');
+    form.reportValidity();
+    
+    // reference to input
+    const firstNameInput = document.getElementById('firstNameInput');
+    const lastNameInput = document.getElementById('lastNameInput');
+    const phoneInput = document.getElementById('phoneInput');
+    const emailInput = document.getElementById('emailInput');
 
     var firstName = document.getElementById('firstNameInput').value;
     var lastName = document.getElementById('lastNameInput').value;
@@ -535,18 +528,22 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
 
     if (firstName.trim() === '') {
         errorMessages.firstName = 'Please enter First Name.';
+        firstNameInput.classList.add('error');
     }
 
     if (lastName.trim() === '') {
         errorMessages.lastName = 'Please enter Last Name.';
+        lastNameInput.classList.add('error');
     }
 
     if (!/^[0-9]{10}$/.test(phone) || phone.trim() === '') {
         errorMessages.phone = 'Please enter a valid 10-digit phone number.';
+        phoneInput.classList.add('error');
     }
 
-    if (!/^.+@.+\..+$/.test(email)||email.trim() === '') {
+    if (!/^.+@.+\..+$/.test(email) || email.trim() === '') {
         errorMessages.email = 'Please enter Email Address.';
+        emailInput.classList.add('error');
     }
 
     document.getElementById('firstNameError').textContent = errorMessages.firstName;
@@ -645,8 +642,6 @@ async function searchAPI(query) {
     try {
         const response = await fetch("http://poosd-project.com/LAMPAPI/Search/Contacts.php", requestOptions);
         const result = await response.json();
-
-        console.log(result);
 
         updateTable(result.result);
     } catch (error) {
