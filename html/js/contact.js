@@ -628,8 +628,7 @@ async function searchAPI(query) {
 
     var raw = JSON.stringify({
         "userid": readCookie("userId"),
-        "search": query,
-        "sorton": "firstname"
+        "search": query
     });
 
     var requestOptions = {
