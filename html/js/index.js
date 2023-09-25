@@ -49,7 +49,8 @@ async function login(username, password) {
             document.cookie = "userId=" + data.id + ";expires=" + date.toGMTString();
             document.cookie = "firstName=" + data.firstName + ";expires=" + date.toGMTString();
             document.cookie = "lastName=" + data.lastName + ";expires=" + date.toGMTString();
-            
+            document.cookie = "expiration=" + date.toGMTString();
+
             return {
                 success: true,
                 userId: data.id,

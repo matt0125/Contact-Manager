@@ -674,3 +674,63 @@ function updateTable(data) {
         contactList.appendChild(newRowElement);
     });
 }
+
+
+
+// Cookie expiration handling
+// Function to get the value of a cookie by name
+function getCookie(cookieName) {
+    const name = cookieName + "=";
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const cookieArray = decodedCookie.split(';');
+    
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i].trim();
+        if (cookie.indexOf(name) === 0) {
+            // Extract the cookie value and decode it
+            return decodeURIComponent(cookie.substring(name.length, cookie.length));
+        }
+    }
+    return "";
+}
+
+
+function willCookieExpire(minutes) {
+    const cookie = getCookie("expiration");
+
+    // Parses the cookie value to extract the expiration date
+    const expirationDate = new Date(cookie);
+    
+    const minutesFromNow = new Date();
+    minutesFromNow.setTime(minutesFromNow.getTime() + (minutes * 60 * 1000));
+    return expirationDate <= minutesFromNow;
+}
+
+function extendCookies(minutes)
+{
+    let date = new Date(getCookie("expiration"));
+    date.setTime(date.getTime() + (minutes * 60 * 1000));
+
+
+    document.cookie = "userId=" + getCookie("userId") + ";expires=" + date.toGMTString();
+    document.cookie = "firstName=" + getCookie("firstName") + ";expires=" + date.toGMTString();
+    document.cookie = "lastName=" + getCookie("lastName") + ";expires=" + date.toGMTString();
+    document.cookie = "expiration=" + date.toGMTString();
+}
+
+// // Check for cookie expiration soon
+setInterval(function() {
+    if (willCookieExpire(5)) {
+        const stayLoggedIn = confirm("Your session will expire in 5 minutes, click OK to stay logged in");
+        if (stayLoggedIn){
+            extendCookies(20);
+        }
+    }
+}, 60000);
+
+// check if cookie is already expired
+setInterval(function() {
+    if (willCookieExpire(0)) {
+        window.location.href = 'index.html';
+    }
+}, 1000); // Check every second (adjust as needed)
