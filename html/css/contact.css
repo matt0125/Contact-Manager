@@ -14,8 +14,6 @@ body {
 
 h1 {
     font-family: "Helvetica", sans-serif;
-    margin-top: 0px;
-    margin-left: 0px;
     font-size: 55px;
 }
 
@@ -54,10 +52,6 @@ header {
     padding: 10px;
 }
 
-#logout-container {
-    /* top: 0px; */
-    /* right: 0px; */
-}
 
 #logout-button {
     background-color: #FFFFFF;
@@ -105,6 +99,8 @@ header {
     background-color: #BFD3C1;
     color: #280003;
     font-size: medium;
+    position: sticky;
+    top: 0;
 }
 
 .table td{
