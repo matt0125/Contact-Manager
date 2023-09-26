@@ -170,12 +170,42 @@ input:invalid, input:invalid:focus {
 input:invalid + span.error-message {
     color: red;
     display: block;
+    font-size: 8px;
+}
+
+.error-message {
+    height: 5px;
+    display: block;
+    width: 100%;
+    color: red;
+    font-size: 11px;
+    margin-top: 0px;
+    margin-bottom: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    right: 0;
+}
+
+/* exlamation mark*/
+.error-message:not(:empty)::before {
+    content: "!";
+    color: white;
+    background-color: red;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 16px;
+    margin-right: 5px;
     font-size: 12px;
 }
 
 #editFirstNameError, #editLastNameError, #editPhoneError, #editEmailError{
     color: red;
-    font-size: 14px;
+    font-size: 10px;
 }
 
 /*tried to make the add contact form not red*/
