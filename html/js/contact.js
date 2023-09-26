@@ -226,7 +226,7 @@ function addContactToTable(contact){
 }
 
 
-function editContact(event, show){
+async function editContact(event, show){
     var overlay = document.getElementById('overlay');
     var modal = document.getElementById('contactModal');
 
@@ -237,7 +237,7 @@ function editContact(event, show){
         const rowElement = event.target.closest("tr");
         const contactId = rowElement.dataset.contactId;
         
-        populateFields(contactId);
+        await populateFields(contactId);
 
         console.log("edit showing true");
         console.log("ID: " + contactId);
