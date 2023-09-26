@@ -90,7 +90,7 @@ header {
 }
 
 .table {
-    background-color: #F0F0F0;
+    /*background-color: #F0F0F0;*/
     font-family: "Open sans", sans-serif;
     font-size: 14px;
 }
@@ -104,7 +104,7 @@ header {
 }
 
 .table td{
-    background-color: #FFF;
+    /*background-color: #FFF;*/
 }
 
 .table th, .table td {
@@ -245,4 +245,12 @@ input.error + span.error-message {
     border-radius: 4px;
     padding: 10px;
     margin-bottom: 20px;
+}
+
+#contactList tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#contactList tr:nth-child(even) {
+    background-color: #f2f2f2;
 }
