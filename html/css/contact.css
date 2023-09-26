@@ -174,11 +174,11 @@ input:invalid + span.error-message {
 }
 
 .error-message {
-    height: 5px;
+    height: 2px;
     display: block;
     width: 100%;
     color: red;
-    font-size: 11px;
+    font-size: 10px;
     margin-top: 0px;
     margin-bottom: 0;
     margin: 0;
@@ -229,3 +229,20 @@ input.error + span.error-message {
     display: block;
     font-size: 12px;
 }  */
+
+.stylish-label label.aligned-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    vertical-align: middle;
+}
+
+.stylish-label input.aligned-input {
+    vertical-align: middle; 
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}

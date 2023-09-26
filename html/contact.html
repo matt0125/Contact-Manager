@@ -6,8 +6,6 @@
     <title>Contacts Page</title>
     <!-- BOOTSTRAP CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
@@ -56,47 +54,34 @@
                 <div id="contactModal" style="display: none;">
                     <i class="fas fa-times close-button fa-md" id="closeForm" onmouseover="this.style.color='#f00';" onmouseout="this.style.color='#888';"></i> <!-- Close button -->
                     <form id="contactForm">
-                        <div class="form-group">
+                        <div class="form-group stylish-label">
+                            <label for="firstNameInput" class="aligned-label">First Name</label>
                             <input type="text" id="firstNameInput" name="firstName" class="form-control" placeholder="First Name">
-                            <label for="firstNameInput">First Name</label>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="firstNameInput" name="firstName" class="form-control" placeholder="First Name">
-                                <label for="firstNameInput">First Name</label>
-                            </div>
                             <span class="error-message" id="firstNameError"></span>
                             <span class="error-message" id="editFirstNameError"></span>
                         </div>
-                        
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="text" id="lastNameInput" name="lastName" class="form-control" placeholder="Last Name">
-                                <label for="lastNameInput">Last Name</label>
-                            </div>
+                                                
+                        <div class="form-group stylish-label">
+                            <label for="lastNameInput">Last Name</label>
+                            <input type="text" id="lastNameInput" name="lastName" class="form-control" placeholder="Last Name">
                             <span class="error-message" id="lastNameError"></span>
                             <span class="error-message" id="editLastNameError"></span>
                         </div>
-                        
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="tel" id="phoneInput" name="phone" class="form-control" autocomplete="phone" placeholder="Phone Number">
-                                <label for="phoneInput">Phone Number</label>
-                            </div>
-                            
+                                                
+                        <div class="form-group stylish-label">
+                            <label for="phoneInput">Phone Number</label>
+                            <input type="tel" id="phoneInput" name="phone" class="form-control" autocomplete="phone" placeholder="Phone Number">
                             <span class="error-message" id="phoneError"></span>
                             <span class="error-message" id="editPhoneError"></span>
                         </div>
-
-                        <div class="form-group">
-                            <div class="form-floating mb-3">
-                                <input type="email" id="emailInput" name="email" class="form-control" autocomplete="email" placeholder="Email Adrdress">
-                                <label for="emailInput">Email Address</label>
-                            </div>
+                        
+                        <div class="form-group stylish-label">
+                            <label for="emailInput">Email Address</label>
+                            <input type="email" id="emailInput" name="email" class="form-control" autocomplete="email" placeholder="Email Address">
                             <span class="error-message" id="emailError"></span>
                             <span class="error-message" id="editEmailError"></span>
                         </div>
-
+                        
                         <input type="hidden" id="contactIdField" name="contactId">
                         
                         <div class="form-group">

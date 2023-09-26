@@ -361,7 +361,7 @@ async function updateContact(contactId, event){
     }
 
     if (!/^[0-9]{10}$/.test(editPhone) || editPhone === '') {
-        document.getElementById('editPhoneError').textContent = 'Please enter a valid 10-digit phone number. xxxxxxxxxx';
+        document.getElementById('editPhoneError').textContent = 'Enter a valid phone number.';
         phoneInput.classList.add('error');
         hasError = true;
         console.log("lol phone error");
@@ -766,35 +766,3 @@ setInterval(function() {
         window.location.href = 'index.html';
     }
 }, 1000); // Check every second (adjust as needed)
-
-
-// floating label code
-document.getElementById('firstNameInput').addEventListener('input', function() {
-    console.log("entered");
-    const label = document.querySelector('label[for="firstNameInput"]');
-    if (this.value !== '') {
-      label.style.top = '0';
-      label.style.fontSize = '12px';
-      label.style.color = 'blue';  /* Change this to any color you like */
-    } else {
-      label.style.top = '50%';
-      label.style.transform = 'translateY(-50%)';
-      label.style.fontSize = '16px';  /* Reset to original font size */
-      label.style.color = 'black';  /* Reset to original color */
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-    const firstNameInput = document.getElementById('firstNameInput');
-    const floatingLabel = document.querySelector('.floating-label');
-  
-    firstNameInput.addEventListener('focus', function() {
-      floatingLabel.classList.add('active');
-    });
-  
-    firstNameInput.addEventListener('blur', function() {
-      if (firstNameInput.value === '') {
-        floatingLabel.classList.remove('active');
-      }
-    });
-  });
