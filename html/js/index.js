@@ -98,7 +98,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         setErrorHighlight(document.getElementById('loginUsername'), true);
     }
 
-    if(username.trim() === ''){
+    if(password.trim() === ''){
         document.getElementById('loginPasswordErr').textContent = 'Please enter password';
         setErrorHighlight(document.getElementById('loginPassword'), true);
     }
