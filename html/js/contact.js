@@ -119,6 +119,10 @@ document.querySelectorAll(".sortable-header").forEach(function (header) {
         if (icon.classList.contains("fa-sort-up")) {
             direction = "DESC";
         }
+        else if (icon.classList.contains("fa-sort-down")) {
+            direction = "";
+            col = "";
+        }
 
         // Reset all other sorting icons to "fa-sort"
         document.querySelectorAll(".sortable-header").forEach(function (otherHeader) {
@@ -140,13 +144,17 @@ document.querySelectorAll(".sortable-header").forEach(function (header) {
         } else if (icon.classList.contains("fa-sort-down")) {
             // If the icon is "fa-sort-down", change it to "fa-sort-up"
             icon.classList.remove("fa-sort-down");
-            icon.classList.add("fa-sort-up");
+            icon.classList.add("fa-sort");
         }
 
-        // Call the sortBy function with parameters
-        sortBy(col, direction);
-        
-        // You can perform other actions here as needed
+        if (col.length !== 0)
+        {
+            sortBy(col, direction);
+        }
+        else
+        {
+            searchAPI("");
+        }
     });
 });
 
