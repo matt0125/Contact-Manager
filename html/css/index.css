@@ -18,7 +18,7 @@ body {
   max-width: 1000px;
   width: 100%;
 
-  height: 650px;
+  height: 750px;
 
   display: flex;
 }
@@ -77,6 +77,7 @@ body {
   text-align: left;
 }
 
+
 .col-form-label {
   color: #280003;
   text-align: left;
@@ -118,6 +119,7 @@ input:invalid + span.error-message {
 
 /* for the eye icon */
 .toggle-password i {
+  position: relative;
   font-size: 1.25rem;
   color: #280003;
 }
@@ -125,8 +127,8 @@ input:invalid + span.error-message {
 #loginTogglePassword {
   position: absolute;
   transform: translateY(-50%);
-  left: 440px;
-  top: 307px;
+  /* left: 440px;
+  top: 50%; */
   background: none; /* Set the background to none */
   border: none;
   cursor: pointer;
@@ -137,8 +139,20 @@ input:invalid + span.error-message {
 #togglePassword {
   position: absolute;
   transform: translateY(-50%);
-  left: 440px;
-  top: 380px;
+  /* left: 440px;
+  top: 380px; */
+  background: none; /* Set the background to none */
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0; /* Remove padding to make the button smaller */
+}
+
+#toggleConfirmPassword {
+  position: absolute;
+  transform: translateY(-50%);
+  /* left: 440px;
+  top: 380px; */
   background: none; /* Set the background to none */
   border: none;
   cursor: pointer;
@@ -150,4 +164,9 @@ input:invalid + span.error-message {
   color: red;
 }
 
+.inputError {
+  color: #8D0A00;
+  text-align: left;
+  font-family: 'Open Sans', sans-serif;
+}
 /* #FFE7FF */
