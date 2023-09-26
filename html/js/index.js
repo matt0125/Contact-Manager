@@ -72,6 +72,14 @@ async function login(username, password) {
     }
 }
 
+function setErrorHighlight(element, hasError){
+    if(hasError) {
+        element.classList.add('error-highlight');
+    } else {
+        element.classList.remove('error-highlight');
+    }
+}
+
 const errorMsg = document.getElementById('errorMsg');
 
 document.getElementById('loginForm').addEventListener('submit', async (e) => {
@@ -79,6 +87,25 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
 
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
+
+    document.getElementById('loginUsernameErr').textContent = '';
+    document.getElementById('loginPasswordErr').textContent = '';
+    setErrorHighlight(document.getElementById('loginUsername'), false);
+    setErrorHighlight(document.getElementById('loginPassword'), false);
+
+    if(username.trim() === ''){
+        document.getElementById('loginUsernameErr').textContent = 'Please enter username';
+        setErrorHighlight(document.getElementById('loginUsername'), true);
+    }
+
+    if(username.trim() === ''){
+        document.getElementById('loginPasswordErr').textContent = 'Please enter password';
+        setErrorHighlight(document.getElementById('loginPassword'), true);
+    }
+
+    if(username.trim() === ''||password.trim() === ''){
+        return;
+    }
 
     const result = await login(username, password);
     if (result.success) {
@@ -163,6 +190,43 @@ document.getElementById('signUpForm').addEventListener('submit', async (e) => {
 
     const signUpError = document.getElementById("signUpError");
 
+    document.getElementById('signupFirstNameErr').textContent = '';
+    document.getElementById('signupLastNameErr').textContent = '';
+    document.getElementById('signupUsernameErr').textContent = '';
+    document.getElementById('signupPasswordErr').textContent = '';
+    document.getElementById('signupConfirmPassErr').textContent = '';
+    setErrorHighlight(document.getElementById('signUpFirstname'), false);
+    setErrorHighlight(document.getElementById('signUpLastname'), false);
+    setErrorHighlight(document.getElementById('signUpUsername'), false);
+    setErrorHighlight(document.getElementById('signUpPassword'), false);
+    setErrorHighlight(document.getElementById('confirmPassword'), false);
+
+    if(firstname.trim() === ''){
+        document.getElementById('signupFirstNameErr').textContent = 'Please enter first name';
+        setErrorHighlight(document.getElementById('signUpFirstname'), true);
+    }
+    if(lastname.trim() === ''){
+        document.getElementById('signupLastNameErr').textContent = 'Please enter last name';
+        setErrorHighlight(document.getElementById('signUpLastname'), true);
+    }
+    if(username.trim() === ''){
+        document.getElementById('signupUsernameErr').textContent = 'Please enter username'
+        setErrorHighlight(document.getElementById('signUpUsername'), true);
+    }
+    if(password.trim() === ''){
+        document.getElementById('signupPasswordErr').textContent = 'Please enter password'
+        setErrorHighlight(document.getElementById('signUpPassword'), true);
+    }
+    if(confirmPassword.trim() === ''){
+        document.getElementById('signupConfirmPassErr').textContent = 'Please enter password to confirm'
+        setErrorHighlight(document.getElementById('confirmPassword'), true);
+    }
+
+    if(firstname.trim() === ''||lastname.trim() === ''||username.trim() === ''||password.trim() === ''||confirmPassword.trim() === ''){
+        return;
+    }
+    
+
     if (password !== confirmPassword) {
         console.log("Passwords don't match");
         signUpError.classList.add('error-message');
@@ -216,6 +280,8 @@ const loginPasswordInput = document.getElementById("loginPassword");
 const loginToggleIcon = document.getElementById("loginToggleIcon");
 const signupPasswordInput = document.getElementById("signUpPassword");
 const signupToggleIcon = document.getElementById("toggleIcon");
+const signupConfirmPassInput = document.getElementById("confirmPassword");
+const signupConfirmPassIcon = document.getElementById("suConfirmToggleIcon");
 
 function togglePasswordVisibility(passwordInput, toggleIcon) {
   if (passwordInput.type === "password") {
@@ -231,6 +297,10 @@ function togglePasswordVisibility(passwordInput, toggleIcon) {
 
 document.getElementById("togglePassword").addEventListener("click", () => {
   togglePasswordVisibility(signupPasswordInput, signupToggleIcon);
+});
+
+document.getElementById("toggleConfirmPassword").addEventListener("click", () => {
+    togglePasswordVisibility(signupConfirmPassInput, signupConfirmPassIcon);
 });
 
 document.getElementById("loginTogglePassword").addEventListener("click", () => {
