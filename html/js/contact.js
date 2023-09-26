@@ -446,7 +446,7 @@ function clearFields() {
     document.getElementById('editFirstNameError').textContent = "";
     document.getElementById('editLastNameError').textContent = "";
     document.getElementById('editPhoneError').textContent = "";
-    document.getElementById('emailEmailError').textContent = "";
+    document.getElementById('editEmailError').textContent = "";
 
 
 }
