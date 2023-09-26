@@ -247,6 +247,7 @@ function editContact(event, show){
         createBtn.style.display = "none";
     }
     else {
+        console.log("how the heck am i here");
         overlay.style.display = "none";
         modal.style.display = "none";
         editBtn.style.display = "none";
@@ -322,7 +323,7 @@ async function populateFields(contactId){
 document.getElementById('editBtn').addEventListener('click', async (event) => {
     //alert("About to update contact w id: " + document.getElementById('contactIdField').value);
     await updateContact(document.getElementById('contactIdField').value, event);
-    toggleAddContact(false);
+    //toggleAddContact(false);
 });
 
 async function updateContact(contactId, event){
@@ -333,18 +334,27 @@ async function updateContact(contactId, event){
     const editPhone = document.getElementById('phoneInput').value.trim();
     const editEmail = document.getElementById('emailInput').value.trim();
 
+    // reference to input
+    const firstNameInput = document.getElementById('firstNameInput');
+    const lastNameInput = document.getElementById('lastNameInput');
+    const phoneInput = document.getElementById('phoneInput');
+    const emailInput = document.getElementById('emailInput');
+
     let hasError = false;
 
     // Validation
     if (editFirstName === '') {
         document.getElementById('editFirstNameError').textContent = 'Please enter First Name.';
         hasError = true;
+        firstNameInput.classList.add("error");
+        console.log("is validating");
     } else {
         document.getElementById('editFirstNameError').textContent = '';
     }
 
     if (editLastName === '') {
         document.getElementById('editLastNameError').textContent = 'Please enter Last Name.';
+        lastNameInput.classList.add('error');
         hasError = true;
     } else {
         document.getElementById('editLastNameError').textContent = '';
@@ -352,19 +362,23 @@ async function updateContact(contactId, event){
 
     if (!/^[0-9]{10}$/.test(editPhone) || editPhone === '') {
         document.getElementById('editPhoneError').textContent = 'Please enter a valid 10-digit phone number. xxxxxxxxxx';
+        phoneInput.classList.add('error');
         hasError = true;
+        console.log("lol phone error");
     } else {
         document.getElementById('editPhoneError').textContent = '';
     }
 
     if (!/^.+@.+\..+$/.test(editEmail) || editEmail === '') {
         document.getElementById('editEmailError').textContent = 'Please enter valid Email Address.';
+        emailInput.classList.add('error');
         hasError = true;
     } else {
         document.getElementById('editEmailError').textContent = '';
     }
 
     if(hasError){
+        console.log("returning!");
         return;
     }
 
@@ -395,6 +409,7 @@ async function updateContact(contactId, event){
             const data = await response.json();
             console.log(data);
             if(data.status === "Contact updated successfully") {
+                console.log("somehow, magically im here");
                 editContact(contactId, false);
                 searchAPI("");
             } else {
@@ -417,6 +432,23 @@ function clearFields() {
     document.getElementById('lastNameInput').value = "";
     document.getElementById('phoneInput').value = "";
     document.getElementById('emailInput').value = "";
+
+    document.getElementById('firstNameInput').classList.remove('error');
+    document.getElementById('lastNameInput').classList.remove('error');
+    document.getElementById('phoneInput').classList.remove('error');
+    document.getElementById('emailInput').classList.remove('error');
+
+    document.getElementById('firstNameError').textContent = "";
+    document.getElementById('lastNameError').textContent = "";
+    document.getElementById('phoneError').textContent = "";
+    document.getElementById('emailError').textContent = "";
+
+    document.getElementById('editFirstNameError').textContent = "";
+    document.getElementById('editLastNameError').textContent = "";
+    document.getElementById('editPhoneError').textContent = "";
+    document.getElementById('emailEmailError').textContent = "";
+
+
 }
 
 
@@ -488,6 +520,7 @@ function toggleAddContact(show) {
         editBtn.style.display = "none";
         createBtn.style.display = "block";
     } else {
+        console.log("somehow super magical im here");
         overlay.style.display = "none";
         modal.style.display = "none";
         editBtn.style.display = "block";
@@ -527,22 +560,22 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
     };
 
     if (firstName.trim() === '') {
-        errorMessages.firstName = 'Please enter First Name.';
+        errorMessages.firstName = 'Enter a first name.';
         firstNameInput.classList.add('error');
     }
 
     if (lastName.trim() === '') {
-        errorMessages.lastName = 'Please enter Last Name.';
+        errorMessages.lastName = 'Enter a last name.';
         lastNameInput.classList.add('error');
     }
 
     if (!/^[0-9]{10}$/.test(phone) || phone.trim() === '') {
-        errorMessages.phone = 'Please enter a valid 10-digit phone number.';
+        errorMessages.phone = 'Enter a valid phone number.';
         phoneInput.classList.add('error');
     }
 
     if (!/^.+@.+\..+$/.test(email) || email.trim() === '') {
-        errorMessages.email = 'Please enter Email Address.';
+        errorMessages.email = 'Enter an email address';
         emailInput.classList.add('error');
     }
 
@@ -733,3 +766,35 @@ setInterval(function() {
         window.location.href = 'index.html';
     }
 }, 1000); // Check every second (adjust as needed)
+
+
+// floating label code
+document.getElementById('firstNameInput').addEventListener('input', function() {
+    console.log("entered");
+    const label = document.querySelector('label[for="firstNameInput"]');
+    if (this.value !== '') {
+      label.style.top = '0';
+      label.style.fontSize = '12px';
+      label.style.color = 'blue';  /* Change this to any color you like */
+    } else {
+      label.style.top = '50%';
+      label.style.transform = 'translateY(-50%)';
+      label.style.fontSize = '16px';  /* Reset to original font size */
+      label.style.color = 'black';  /* Reset to original color */
+    }
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const firstNameInput = document.getElementById('firstNameInput');
+    const floatingLabel = document.querySelector('.floating-label');
+  
+    firstNameInput.addEventListener('focus', function() {
+      floatingLabel.classList.add('active');
+    });
+  
+    firstNameInput.addEventListener('blur', function() {
+      if (firstNameInput.value === '') {
+        floatingLabel.classList.remove('active');
+      }
+    });
+  });
