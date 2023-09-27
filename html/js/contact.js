@@ -370,7 +370,9 @@ async function updateContact(contactId, event){
     }
 
     if (editPhone !== '') {
-        if (!/^[0-9]{10}$/.test(editPhone)) {
+        let cleanPhone = editPhone.replace(/\D/g, '');
+        console.log(cleanPhone);
+        if (!/^[0-9]{10}$/.test(cleanPhone)) {
             document.getElementById('editPhoneError').textContent = 'Enter a valid phone number.';
             phoneInput.classList.add('error');
             hasError = true;
@@ -586,7 +588,8 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
     }
 
     if (phone.trim() !== '') {
-        if (!/^[0-9]{10}$/.test(phone)) {
+        let cleanPhone = phone.replace(/\D/g, '');
+        if (!/^[0-9]{10}$/.test(cleanPhone)) {
             errorMessages.phone = 'Enter a valid phone number.';
             phoneInput.classList.add('error');
         } else {
