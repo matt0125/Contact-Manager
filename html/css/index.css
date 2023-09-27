@@ -53,6 +53,14 @@ body {
   padding: .5rem 1rem;
 }
 
+/* style for active button*/
+.custom-color-btn.active {
+  background-color: #BFD3C1;
+  border-color: transparent;
+  color: #280003;
+}
+
+/*non-active button*/
 .custom-color-btn {
   background-color: #004F2D;
   border-color: #6D8FB7;
