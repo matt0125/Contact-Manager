@@ -369,26 +369,33 @@ async function updateContact(contactId, event){
         document.getElementById('editLastNameError').textContent = '';
     }
 
-    if (!/^[0-9]{10}$/.test(editPhone) || editPhone === '') {
-        document.getElementById('editPhoneError').textContent = 'Enter a valid phone number.';
-        phoneInput.classList.add('error');
-        hasError = true;
-        console.log("lol phone error");
+    if (editPhone !== '') {
+        if (!/^[0-9]{10}$/.test(editPhone)) {
+            document.getElementById('editPhoneError').textContent = 'Enter a valid phone number.';
+            phoneInput.classList.add('error');
+            hasError = true;
+            console.log("lol phone error");
+        } else {
+            document.getElementById('editPhoneError').textContent = '';
+            phoneInput.classList.remove('error');
+        }
     } else {
         document.getElementById('editPhoneError').textContent = '';
+        phoneInput.classList.remove('error');
     }
 
-    if (!/^.+@.+\..+$/.test(editEmail) || editEmail === '') {
-        document.getElementById('editEmailError').textContent = 'Please enter valid Email Address.';
-        emailInput.classList.add('error');
-        hasError = true;
+    if (editEmail !== '') {
+        if (!/^.+@.+\..+$/.test(editEmail)) {
+            document.getElementById('editEmailError').textContent = 'Please enter valid Email Address.';
+            emailInput.classList.add('error');
+            hasError = true;
+        } else {
+            document.getElementById('editEmailError').textContent = '';
+            emailInput.classList.remove('error');
+        }
     } else {
         document.getElementById('editEmailError').textContent = '';
-    }
-
-    if(hasError){
-        console.log("returning!");
-        return;
+        emailInput.classList.remove('error');
     }
 
     try {
@@ -578,14 +585,30 @@ document.getElementById('submitBtn').addEventListener('click', async function(e)
         lastNameInput.classList.add('error');
     }
 
-    if (!/^[0-9]{10}$/.test(phone) || phone.trim() === '') {
-        errorMessages.phone = 'Enter a valid phone number.';
-        phoneInput.classList.add('error');
+    if (phone.trim() !== '') {
+        if (!/^[0-9]{10}$/.test(phone)) {
+            errorMessages.phone = 'Enter a valid phone number.';
+            phoneInput.classList.add('error');
+        } else {
+            delete errorMessages.phone;
+            phoneInput.classList.remove('error');
+        }
+    } else {
+        delete errorMessages.phone;
+        phoneInput.classList.remove('error');
     }
 
-    if (!/^.+@.+\..+$/.test(email) || email.trim() === '') {
-        errorMessages.email = 'Enter an email address';
-        emailInput.classList.add('error');
+    if (email.trim() !== '') {
+        if (!/^.+@.+\..+$/.test(email)) {
+            errorMessages.email = 'Enter an email address';
+            emailInput.classList.add('error');
+        } else {
+            delete errorMessages.email;
+            emailInput.classList.remove('error');
+        }
+    } else {
+        delete errorMessages.email;
+        emailInput.classList.remove('error');
     }
 
     document.getElementById('firstNameError').textContent = errorMessages.firstName;
