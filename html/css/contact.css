@@ -8,7 +8,7 @@ body {
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    background-image: url(mainbackground.jpg);
+    background-image: url(../images/mainbackground.jpg);
     background-size: cover;
 }
 
@@ -89,27 +89,7 @@ header {
     padding: 20px; /* Add some padding for spacing */
 }
 
-.table {
-    /*background-color: #F0F0F0;*/
-    font-family: "Open sans", sans-serif;
-    font-size: 14px;
-}
 
-.table th{
-    background-color: #BFD3C1;
-    color: #280003;
-    font-size: medium;
-    position: sticky;
-    top: 0;
-}
-
-.table td{
-    /*background-color: #FFF;*/
-}
-
-.table th, .table td {
-    padding: 10px;
-}
 
 .sortable-header {
     cursor: pointer; /* Add pointer cursor */
@@ -255,19 +235,57 @@ input.error + span.error-message {
     background-color: #f2f2f2;
 }
 
+<<<<<<< Updated upstream
+=======
+.table {
+    /*background-color: #F0F0F0;*/
+    font-family: "Open sans", sans-serif;
+    font-size: 14px;
+}
+
+.table th{
+    background-color: #BFD3C1;
+    color: #190028;
+    font-size: medium;
+    position: sticky;
+    top: 0;
+}
+
+.table th, .table td {
+    padding-top: 10px;    /* Adjust the top padding value as needed */
+    padding-bottom: 10px; /* Adjust the bottom padding value as needed */
+    padding-left: 2vw;    /* Adjust the left padding value as needed */
+}
+
+>>>>>>> Stashed changes
 .edit-icon {
     margin-right: 100px;
 }
 
+<<<<<<< Updated upstream
 .table tbody tr:hover {
     transform: scale(1.02); 
     transition: transform .2s ease-in-out;
     z-index: 1; 
+=======
+.table tbody tr {
+    transition: transform 0.2s ease-in-out;
+}
+
+.table tbody tr:hover {
+    transform: scaleX(1.02);
+    z-index: 1;
+>>>>>>> Stashed changes
 }
 
 .table tbody tr td i {
     opacity: 0;
+<<<<<<< Updated upstream
     transition: opacity .2s ease-in-out;
+=======
+    transition: opacity .1s ease-in-out;
+    cursor: pointer;
+>>>>>>> Stashed changes
 }
 
 .table tbody tr:hover td i {

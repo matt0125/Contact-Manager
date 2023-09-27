@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Croissant+One&family=Mooli&family=Open+Sans&display=swap');
 body {
-  background-image: url(mainbackground.jpg);
+  background-image: url(../images/mainbackground.jpg);
   background-size: cover;
 }
 
@@ -35,10 +35,14 @@ body {
   border-bottom-left-radius: 10px;
 }
 .rounded-frame-half:last-child {
-  background-image: url(bug.jpeg);
+  background-image: url(../images/bug.jpeg);
+  background-size: cover;
+  background-position: center; /* Center the background image horizontally */
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+
 
 .handwritten {
   font-family: 'Open Sans', sans-serif;
