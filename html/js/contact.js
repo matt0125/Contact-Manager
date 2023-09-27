@@ -429,7 +429,7 @@ async function updateContact(contactId, event){
             if(data.status === "Contact updated successfully") {
                 console.log("somehow, magically im here");
                 editContact(contactId, false);
-                searchAPI(document.getElementById("search-bar").value);
+                searchAPI(document.getElementById("search-input").value);
             } else {
                 console.log("Failed to update contact:", data.error || "");
                 return false;
