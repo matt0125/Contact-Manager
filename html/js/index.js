@@ -26,10 +26,11 @@ async function login(username, password) {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             
+            var hashUser = md5(password);
             var hash = md5(password);
             
             var raw = JSON.stringify({
-            "login": username,
+            "login": hashUser,
             "password": hash
             });
 
@@ -138,11 +139,12 @@ async function signup(firstname, lastname, username, password) {
             myHeaders.append("Content-Type", "application/json");
 
             var hash = md5(password);
+            var hashUser = md5(username);
 
             var raw = JSON.stringify({
             "firstname": firstname,
             "lastname": lastname,
-            "login": username,
+            "login": hashUser,
             "password": hash
             });
 
