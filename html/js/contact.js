@@ -420,7 +420,7 @@ async function updateContact(contactId, event){
             if(data.status === "Contact updated successfully") {
                 console.log("somehow, magically im here");
                 editContact(contactId, false);
-                searchAPI("");
+                searchAPI(document.getElementById("search-bar").value);
             } else {
                 console.log("Failed to update contact:", data.error || "");
                 return false;
@@ -511,7 +511,7 @@ async function deleteContactExec(contactId){
     catch (error) {
         throw error;
     }
-    searchAPI("");
+    searchAPI(document.getElementById("search-input").value);
 }
 
 searchAPI("");
@@ -695,11 +695,11 @@ function updateTable(data) {
     const contactList = document.getElementById('contactList');
     contactList.innerHTML = '';
 
-    console.log("This is data:");
+    //console.log("This is data:");
     console.log(data);
 
     data.forEach(row => {
-        console.log("This is a row:");
+        //console.log("This is a row:");
         console.log(row);
         const newRowElement = document.createElement('tr');
         newRowElement.innerHTML = `
