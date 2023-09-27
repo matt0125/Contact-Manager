@@ -22,10 +22,17 @@
     <!-- Rounded frame for login and signup-->
     <div class="rounded-frame">
       <div class="rounded-frame-half text-center">
-        <div class="btn-group" role="group" aria-label="Toggle between Login and Signup">
-            <button id="loginButton" onclick="toggleForm('login')" type="button" class="btn btn-primary handwritten custom-color-btn">Login</button>
-            <button id="signUpButton" onclick="toggleForm('signup')" type="button" class="btn btn-secondary handwritten custom-color-btn">Sign Up</button>
+
+      <div style="height: 2vh;">
+        <!-- Empty spacer row -->
+      </div>
+        <div>
+          <img src="images/logo.png" style="max-width: 200px;"/>
         </div>
+
+      <div style="height: 2vh;">
+        <!-- Empty spacer row -->
+      </div>
         <div id="loginForm" class="mb-4 mt-3">
             <h2 class="handwritten">Welcome Back!</h2>
             <form>
@@ -43,7 +50,11 @@
                   <div id="loginPasswordErr" class="inputError"></div>
               </div>
               <button type="submit" class="btn btn-primary mt-2 handwritten wide-btn custom-color-btn">Login</button>
+              <div class="btn-group" role="group" aria-label="Toggle between Login and Signup">
+                New user? <a href="javascript:void(0);" onclick="toggleForm('signup')" style="margin-left: 6px;"> Register here!</a>
+              </div>
               <div id="errorMsg"></div>
+
           </form>
           
         </div>
@@ -83,7 +94,11 @@
                   </button>
                   <div id="signupConfirmPassErr" class="inputError"></div>
               </div>
+
               <button type="submit" class="btn btn-primary mt-2 wide-btn custom-color-btn">Sign Up</button>
+              <div class="btn-group" role="group" aria-label="Toggle between Login and Signup">
+                Have an account? <a href="javascript:void(0);" onclick="toggleForm('login')" style="margin-left: 6px;"> Log in!</a>
+              </div>
               <div id="signUpError"></div>
           </form>
       </div>
