@@ -26,7 +26,7 @@ async function login(username, password) {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
             
-            var hashUser = md5(password);
+            var hashUser = md5(user);
             var hash = md5(password);
             
             var raw = JSON.stringify({
