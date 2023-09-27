@@ -775,3 +775,22 @@ setInterval(function() {
         window.location.href = 'index.html';
     }
 }, 1000); // Check every second (adjust as needed)
+
+// Phone auto format
+document.addEventListener('DOMContentLoaded', () => {
+    const phoneInput = document.getElementById('phoneInput');
+
+    phoneInput.addEventListener('input', function(event) {
+        let value = this.value.replace(/\D/g, '');
+        
+        if (value.length > 3 && value.length <= 6) {
+            value = value.replace(/^(\d{3})(\d+)/, '($1) $2');
+        } else if (value.length > 6) {
+            value = value.replace(/^(\d{3})(\d{3})(\d+)/, '($1) $2-$3');
+        } else {
+            value = value.replace(/^(\d{0,3})(\d{0,3})/, '($1) $2');
+        }
+        
+        this.value = value;
+    });
+});
