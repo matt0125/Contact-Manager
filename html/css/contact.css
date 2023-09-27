@@ -265,7 +265,6 @@ input.error + span.error-message {
 
 .table tbody tr:hover {
     transform: scaleX(1.02);
-    z-index: 1;
     font-weight: bold;
 }
 
