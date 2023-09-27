@@ -247,6 +247,7 @@ input.error + span.error-message {
     font-size: medium;
     position: sticky;
     top: 0;
+    z-index: 1;
 }
 
 .table th, .table td {
@@ -264,7 +265,6 @@ input.error + span.error-message {
 }
 
 .table tbody tr:hover {
-    transform: scaleX(1.02);
     font-weight: bold;
 }
 
