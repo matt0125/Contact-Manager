@@ -225,10 +225,11 @@ function addContactToTable(contact){
         <td>${contact.email}</td>
         <td>
         
-            <i onclick="editContact(event, true)" class="fa-solid fa-pen"></i>
+            <i onclick="editContact(event, true)" class="fa-solid fa-pen" style="margin-right: 10px;"></i>
             <i onclick="deleteContact(event)" class="fa-regular fa-trash-can"></i>
         </td>
     `;
+    
     contactList.appendChild(newRow);
     console.log('Added contact to the table:', contact);
 }
@@ -707,7 +708,7 @@ function updateTable(data) {
             <td>${row.phone}</td>
             <td>${row.email}</td>
             <td>
-                <i onclick="editContact(event, true)" class="fa-solid fa-pen"></i>
+                <i onclick="editContact(event, true)" class="fa-solid fa-pen"></i>&nbsp;&nbsp;&nbsp;&nbsp;
                 <i onclick="deleteContact(event)" class="fa-regular fa-trash-can"></i>
             </td>`;
         newRowElement.setAttribute('data-contact-id', row.contactid);
