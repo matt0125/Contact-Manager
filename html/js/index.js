@@ -119,9 +119,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     } else {
         console.error('Login failed:', result.error);
 
-        errorMsg.classList.add('error-message');
+        errorMsg.classList.add('inputError');
         if (result.error ===     "No Records Found") {
             errorMsg.textContent = "User name does not exist";
+            usernameInput.classList.add('error-highlight');
         } else if (result.error === "Incorrect password") {
             errorMsg.textContent = "User name exists, incorrect password";
             loginPasswordInput.classList.add('error-highlight');
@@ -282,6 +283,8 @@ const signupPasswordInput = document.getElementById("signUpPassword");
 const signupToggleIcon = document.getElementById("toggleIcon");
 const signupConfirmPassInput = document.getElementById("confirmPassword");
 const signupConfirmPassIcon = document.getElementById("suConfirmToggleIcon");
+
+const usernameInput = document.getElementById("loginUsername");
 
 function togglePasswordVisibility(passwordInput, toggleIcon) {
   if (passwordInput.type === "password") {
