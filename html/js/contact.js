@@ -400,6 +400,10 @@ async function updateContact(contactId, event){
         emailInput.classList.remove('error');
     }
 
+    if (hasError) {
+        return;
+    }
+
     try {
 
         var requestBody = JSON.stringify({
