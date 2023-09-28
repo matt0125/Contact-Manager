@@ -1,6 +1,8 @@
 # Contact-Manager
 POOSD small project - group 18
 
+[Contact Manager web app](http://poosd-project.com) - use the login "demo" "demo" to see a pre-populated account or create your own and check it out!
+
 ### To get project running
 1. Install a Digital Ocean LAMP droplet
 2. Log in
